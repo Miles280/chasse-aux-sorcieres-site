@@ -1,18 +1,41 @@
 /* Carrousel */
-.marquee {
+/* La bande entière */
+.marquee-track {
   display: flex;
   width: max-content;
-  /* Assurez-vous que le padding est là si vous utilisez -50% */
-  padding-right: 1.5rem; 
-  animation: marquee 15s linear infinite;
+  animation: scroll 30s linear infinite;
 }
 
-@keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-672px); } 
+/* Une liste */
+.marquee {
+  display: flex;
+  gap: 1.5rem;
 }
 
-.marquee:hover {
-  animation-play-state: paused;
+/* Les items */
+.item {
+  flex-shrink: 0;
+  width: 9rem;
+  text-align: center;
 }
 
+.avatar {
+  width: 6rem;
+  height: 6rem;
+  margin: 0 auto 1rem;
+  border-radius: 9999px;
+}
+
+/* Animation */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.divider-rune {
+  color: #8b5cf6;
+} /* currentColor contrôle la couleur */
