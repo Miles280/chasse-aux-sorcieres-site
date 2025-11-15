@@ -1,6 +1,6 @@
 import { Component, AfterViewInit, OnInit } from '@angular/core';
 
-interface Membre {
+interface Member {
   nom: string;
   role: string;
   bg: string;
@@ -15,17 +15,17 @@ interface Membre {
 })
 export class HomeComponent implements AfterViewInit, OnInit {
 
-  membres: Membre[] = [
+  membres: Member[] = [
     { nom: 'Miles', role: 'Animateur', bg: 'bg-purple-800' },
     { nom: 'Zou :)', role: 'Animateur', bg: 'bg-indigo-800' },
     { nom: 'Protecteur', role: 'Défenseur', bg: 'bg-green-800' },
     { nom: 'Espion', role: 'Observateur', bg: 'bg-pink-800' },
   ];
 
-  membresDupliques: Membre[] = [];
+  memberDuplicated: Member[] = [];
 
   ngOnInit(): void {
-    this.membresDupliques = [...this.membres, ...this.membres];
+    this.memberDuplicated = [...this.membres, ...this.membres];
   }
 
   ngAfterViewInit(): void {
