@@ -3,3 +3,104 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+    background-color: #375082;
+}
+
+/* .content {
+    margin: 0em 6em;
+} */
+
+/* --- Étoiles animées petites et moyennes --- */
+.stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  background-image:
+    radial-gradient(2px 2px at 10% 20%, #ffffff, transparent),
+    radial-gradient(2px 2px at 50% 40%, #f0f0ff, transparent),
+    radial-gradient(2px 2px at 70% 80%, #e5e5ff, transparent),
+    radial-gradient(2px 2px at 30% 60%, #ffffff, transparent),
+    radial-gradient(2px 2px at 90% 10%, #ffffff, transparent);
+  background-repeat: repeat;
+  opacity: 1; /* plus visible */
+  animation: moveStars 120s linear infinite, twinkleStars 2s ease-in-out infinite;
+}
+
+/* --- Étoiles grandes et rares --- */
+.stars-large {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  background-image:
+    radial-gradient(4px 4px at 20% 30%, #ffffff, transparent),
+    radial-gradient(3px 3px at 60% 50%, #f8f8ff, transparent),
+    radial-gradient(5px 5px at 80% 80%, #ffffff, transparent);
+  background-repeat: repeat;
+  opacity: 0.9; /* lumineuses */
+  animation: moveStars 180s linear infinite, twinkleStarsLarge 4s ease-in-out infinite;
+}
+
+/* --- Animations --- */
+@keyframes moveStars {
+  from { transform: translate(0, 0); }
+  to { transform: translate(-25%, -25%); }
+}
+
+@keyframes twinkleStars {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+@keyframes twinkleStarsLarge {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+/* Cartes */
+
+/* Hover : zoom + rotation + glow */
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-hover:hover {
+  transform: scale(1.05) rotate(-1deg);
+  box-shadow: 0 0 30px rgba(133, 130, 214, 0.3), 0 0 60px rgba(114, 76, 205, 0.2);
+}
+
+/* Flottement subtil */
+@keyframes floatCard {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
+.card-float {
+  animation: floatCard 4s ease-in-out infinite;
+}
+
+/* Effet scintillement du fond */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.animate-shimmer {
+  background: linear-gradient(120deg, rgba(255,255,255,0.05) 30%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.05) 70%);
+  background-size: 200% 100%;
+  animation: shimmer 3s linear infinite;
+}
+
+/* Halo pulsant autour de l'icône */
+.animate-pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+

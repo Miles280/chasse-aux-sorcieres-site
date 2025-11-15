@@ -1,0 +1,18 @@
+/* Carrousel */
+.marquee {
+  display: flex;
+  width: max-content;
+  /* Assurez-vous que le padding est là si vous utilisez -50% */
+  padding-right: 1.5rem; 
+  animation: marquee 15s linear infinite;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-672px); } 
+}
+
+.marquee:hover {
+  animation-play-state: paused;
+}
+
