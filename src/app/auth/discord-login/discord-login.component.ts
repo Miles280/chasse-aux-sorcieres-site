@@ -17,7 +17,7 @@ export class DiscordLoginComponent {
       `?client_id=${this.env.discordClientId}` +
       `&response_type=code` +
       `&redirect_uri=${encodeURIComponent(this.env.discordRedirectUri)}` +
-      `&scope=identify%20email`;
+      `&scope=guilds.members.read+email+identify`;
 
     window.location.href = url;
   }
