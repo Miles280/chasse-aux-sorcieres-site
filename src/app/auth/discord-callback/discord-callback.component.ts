@@ -20,13 +20,14 @@ export class DiscordCallbackComponent {
 
       if (!code) {
         console.error('No code in callback');
+        this.router.navigate(['/login']);
         return;
       }
 
-      this.authService.exchangeCode(code).subscribe({
+      this.authService.exchangeCode({ code }).subscribe({
         next: (response: any) => {
           console.log(response);
-          localStorage.setItem('token', response.token);
+          this.authService.saveToken(response.token);
           this.router.navigate(['/']);
         },
         error: (err) => {

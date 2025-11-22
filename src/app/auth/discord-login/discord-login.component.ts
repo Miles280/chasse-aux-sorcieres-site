@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { environment } from '@env/environment';
 
 @Component({
   selector: 'app-discord-login',
@@ -8,15 +9,14 @@ import { Component } from '@angular/core';
   styleUrl: './discord-login.component.css',
 })
 export class DiscordLoginComponent {
-  private clientId = '1440736031786799104';
-  private redirectUri = 'http://localhost:4200/auth/discord/callback';
+  private env = environment;
 
   loginWithDiscord() {
     const url =
       `https://discord.com/oauth2/authorize` +
-      `?client_id=${this.clientId}` +
+      `?client_id=${this.env.discordClientId}` +
       `&response_type=code` +
-      `&redirect_uri=${encodeURIComponent(this.redirectUri)}` +
+      `&redirect_uri=${encodeURIComponent(this.env.discordRedirectUri)}` +
       `&scope=identify%20email`;
 
     window.location.href = url;
