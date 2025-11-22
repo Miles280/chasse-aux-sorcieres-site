@@ -1,8 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,10 +11,11 @@ import { environment } from '@env/environment';
 export class DiscordAuthService {
   private router = inject(Router);
   private http = inject(HttpClient);
+  private cookieService = inject(CookieService);
   private env = environment;
 
   exchangeCode(payload: { code: string }): Observable<any> {
-    return this.http.post(`${this.env.apiUrl}/auth/discord`, payload);
+    return this.http.post(`${this.env.apiUrl}/auth/login`, payload);
   }
 
   private loggedIn = new BehaviorSubject<boolean>(
@@ -46,6 +48,33 @@ export class DiscordAuthService {
     }
   }
 
+  saveRefreshToken(token: string) {
+    this.cookieService.set(
+      'refreshToken',
+      token,
+      30,
+      '/',
+      undefined,
+      false,
+      'Strict'
+    );
+  }
+
+  refreshToken(): Observable<string> {
+    const refreshToken = this.cookieService.get('refreshToken');
+    return this.http
+      .post<{ token: string; refreshToken: string }>('/api/auth/refresh', {
+        refreshToken,
+      })
+      .pipe(
+        map((response) => {
+          this.saveToken(response.token);
+          this.saveRefreshToken(response.refreshToken);
+          return response.token;
+        })
+      );
+  }
+
   private decodeToken(token: string): any {
     try {
       const payload = token.split('.')[1];
@@ -73,5 +102,16 @@ export class DiscordAuthService {
 
   getRoles(): string[] {
     return JSON.parse(localStorage.getItem('roles') || '[]');
+  }
+
+  isTokenExpired(): boolean {
+    const token = this.getToken();
+    if (!token) return true;
+
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    const exp = payload.exp;
+    const now = Math.floor(Date.now() / 1000);
+
+    return exp < now;
   }
 }

@@ -28,6 +28,7 @@ export class DiscordCallbackComponent {
         next: (response: any) => {
           console.log(response);
           this.authService.saveToken(response.token);
+          this.authService.saveRefreshToken(response.refreshToken);
           this.router.navigate(['/']);
         },
         error: (err) => {
