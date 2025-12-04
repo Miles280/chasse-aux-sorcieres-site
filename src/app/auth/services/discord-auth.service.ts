@@ -13,6 +13,7 @@ export class DiscordAuthService {
   private http = inject(HttpClient);
   private cookieService = inject(CookieService);
   private env = environment;
+  private isProd = environment.production;
 
   exchangeCode(payload: { code: string }): Observable<any> {
     return this.http.post(`${this.env.apiUrl}/auth/login`, payload);
@@ -55,7 +56,7 @@ export class DiscordAuthService {
       30,
       '/',
       undefined,
-      false,
+      this.isProd,
       'Strict'
     );
   }
