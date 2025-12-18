@@ -1,0 +1,125 @@
+<nav
+  class="fixed top-0 w-full z-50 transition-all duration-300"
+  [class.bg-transparent]="!isScrolled"
+  [class.bg-white]="isScrolled"
+  [class.bg-opacity-80]="isScrolled"
+  [class.backdrop-blur-md]="isScrolled"
+  [class.shadow-md]="isScrolled"
+  [class.dark:bg-gray-900]="isScrolled"
+  [class.dark:bg-opacity-80]="isScrolled"
+>
+
+  <div
+    class="max-w-screen-xl mx-auto px-4 h-20 flex items-center"
+  >
+    <!-- Logo (gauche) -->
+    <a class="flex items-center gap-3 shrink-0">
+      <img src="/logo.png" class="h-8" alt="Logo" />
+      <span
+        class="text-2xl font-semibold transition-colors duration-300"
+        [class.text-white]="!isScrolled"
+        [class.text-gray-900]="isScrolled"
+        [class.dark:text-white]="isScrolled"
+      >
+        Chasse aux sorcières
+      </span>
+    </a>
+
+    <!-- Menu centré -->
+    <ul
+      class="hidden md:flex flex-1 justify-center gap-8 font-medium"
+    >
+      <li>
+        <a
+          class="transition-colors"
+          [class.text-white]="!isScrolled"
+          [class.text-gray-900]="isScrolled"
+          [class.dark:text-white]="isScrolled"
+          [class.hover:text-blue-300]="!isScrolled"
+          [class.hover:text-blue-700]="isScrolled"
+        >
+          L'équipe
+        </a>
+      </li>
+
+      <li>
+        <a
+          class="transition-colors"
+          [class.text-white]="!isScrolled"
+          [class.text-gray-900]="isScrolled"
+          [class.dark:text-white]="isScrolled"
+          [class.hover:text-blue-300]="!isScrolled"
+          [class.hover:text-blue-700]="isScrolled"
+        >
+          Rôles
+        </a>
+      </li>
+
+      <li>
+        <a
+          class="transition-colors"
+          [class.text-white]="!isScrolled"
+          [class.text-gray-900]="isScrolled"
+          [class.dark:text-white]="isScrolled"
+          [class.hover:text-blue-300]="!isScrolled"
+          [class.hover:text-blue-700]="isScrolled"
+        >
+          Règles
+        </a>
+      </li>
+
+      <!-- Utilisateur connecté + droits -->
+      <li>
+        <a
+          class="transition-colors"
+          [class.text-white]="!isScrolled"
+          [class.text-gray-900]="isScrolled"
+          [class.dark:text-white]="isScrolled"
+          [class.hover:text-blue-300]="!isScrolled"
+          [class.hover:text-blue-700]="isScrolled"
+        >
+          Gestion
+        </a>
+      </li>
+    </ul>
+
+    <!-- Actions (droite) -->
+    <div class="flex items-center gap-4 shrink-0">
+      <button
+        class="rounded-lg text-sm px-4 py-2 transition-all"
+        [class.bg-white]="!isScrolled"
+        [class.text-blue-700]="!isScrolled"
+        [class.hover:bg-gray-100]="!isScrolled"
+        [class.bg-blue-700]="isScrolled"
+        [class.text-white]="isScrolled"
+        [class.hover:bg-blue-800]="isScrolled"
+      >
+        Connexion
+      </button>
+
+      <!-- Burger (mobile) -->
+<button
+  type="button"
+  class="
+    md:hidden inline-flex items-center justify-center
+    w-10 h-10 rounded-lg transition-colors
+    hover:bg-gray-100 hover:bg-opacity-10
+    hover:bg-gray-100
+  "
+  [class.text-white]="!isScrolled"
+  [class.text-gray-600]="isScrolled"
+>
+        <span class="sr-only">Open menu</span>
+        <svg class="w-5 h-5" viewBox="0 0 17 14" fill="none">
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M1 1h15M1 7h15M1 13h15"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+</nav>
