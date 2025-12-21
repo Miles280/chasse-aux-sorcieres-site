@@ -1,0 +1,41 @@
+/* Carrousel */
+/* La bande entière */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: scroll 30s linear infinite;
+}
+
+/* Une liste */
+.marquee {
+  display: flex;
+  gap: 1.5rem;
+}
+
+/* Les items */
+.item {
+  flex-shrink: 0;
+  width: 9rem;
+  text-align: center;
+}
+
+.avatar {
+  width: 6rem;
+  height: 6rem;
+  margin: 0 auto 1rem;
+  border-radius: 9999px;
+}
+
+/* Animation */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.divider-rune {
+  color: #8b5cf6;
+} /* currentColor contrôle la couleur */
