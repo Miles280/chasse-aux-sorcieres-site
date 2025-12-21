@@ -1,1 +1,6 @@
-export * from './environment.development';
+export const environment = {
+  production: true,
+  apiUrl: '',
+  discordClientId: '',
+  discordRedirectUri: '',
+};
