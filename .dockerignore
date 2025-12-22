@@ -8,3 +8,5 @@ build
 .gitignore
 
 npm-debug.log*
+
+Dockerfile
