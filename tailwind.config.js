@@ -4,7 +4,10 @@ module.exports = {
     "./src/**/*.{html,ts}",
   ],
   theme: {
-    extend: {},
+    extend: { fontFamily: {
+        title: ['Sekuya', 'serif'],
+        detailUnderTitle: ['Barlow Condensed', 'sans-serif']
+    }},
   },
   plugins: [],
 }
