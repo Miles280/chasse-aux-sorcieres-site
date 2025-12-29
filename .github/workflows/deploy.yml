@@ -1,0 +1,20 @@
+name: Deploy SITE
+on:
+  push:
+    branches: [main]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd ~/chasse-aux-sorcieres/site
+            git pull origin main
+            cd ..
+            # C'est ici que ton VPS va transpirer un peu
+            docker compose up -d --build site
+            docker image prune -f
