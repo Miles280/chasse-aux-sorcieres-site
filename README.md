@@ -1,16 +1,34 @@
-# 🏰 Chasse aux Sorcières - Site
+## 🏰 Chasse aux Sorcières — Site Web
 
-Ce dépôt contient le frontend développé avec **Angular 18**.
+Frontend officiel du projet, développé avec **Angular 18**.
+Il permet de présenter l’univers du jeu, ses règles, son lore et (à terme) un espace utilisateur interactif.
 
-## 🖥️ Développement
-Lancer le serveur de développement :
+---
+
+### 🖥️ Développement local
+
 ```bash
 npm install
 ng serve
 ```
 
-## 🌍 Production
-Le site est servi par un serveur Nginx optimisé à l'intérieur d'un conteneur Docker. URL : https://chasse-aux-sorcieres.fr
+Le site est alors accessible en mode développement.
 
-## 🏗️ Build Context
-Note : Le build est optimisé via un fichier .dockerignore pour ne pas saturer la RAM du VPS lors du déploiement.
+---
+
+### 🌍 Production
+
+* Le site est buildé et servi via **Nginx**
+* Hébergé dans un conteneur Docker
+* Accessible à l’adresse officielle :
+
+👉 **[https://chasse-aux-sorcieres.fr](https://chasse-aux-sorcieres.fr)**
+
+---
+
+### 🏗️ Build & Optimisation
+
+Le build est optimisé grâce à un fichier `.dockerignore` afin de :
+
+* limiter la consommation mémoire
+* éviter la saturation de la RAM du VPS lors des déploiements
