@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { DiscordAuthService } from '../auth/services/discord-auth.service';
 
 @Component({
   selector: 'app-header-new',
@@ -16,4 +17,5 @@ export class HeaderNewComponent {
   onScroll() {
     this.isScrolled = window.scrollY > 50;
   }
+  DiscordAuthService = inject(DiscordAuthService);
 }

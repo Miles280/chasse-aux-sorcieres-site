@@ -70,7 +70,7 @@
       </li>
 
       <!-- Utilisateur connecté + droits -->
-       <!-- @if (isAuthenticated) {  -->
+       @if (DiscordAuthService.isLoggedIn$|async) { 
       <li>
         <a routerLink="/management"
           class="transition-colors"
@@ -83,7 +83,7 @@
           Gestion
         </a>
       </li>
-      <!-- } -->
+      }
     </ul>
 
     <!-- Actions (droite) -->
