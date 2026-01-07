@@ -1,25 +1,53 @@
 <!-- SECTION 1 -->
-<section class="min-h-screen pt-24" id="bgImage">
-  <div
-    class="max-w-screen-xl mx-auto h-full grid grid-cols-1 md:grid-cols-3 px-6 mt-20"
-  >
+<section id="bgImage" class="min-h-screen flex items-center pt-24">
+  <div class="max-w-screen-xl mx-auto px-6 w-full">
     <!-- Bloc 1 : Texte (gauche) -->
-    <div class="flex flex-col justify-center gap-6">
+    <div class="flex flex-col justify-center gap-6 max-w-md">
       <h1 class="font-test text-4xl md:text-5xl font-extrabold text-gray-100">
         La chasse aux sorcières
       </h1>
 
-      <p class="text-m text-gray-100 max-w-md font-test2">
+      <p class="text-m text-gray-100 font-test2">
         Rencontrez une communauté de passionnés avec des séances de jeu
         régulière, du jour au jour, de exemple heure à exemple heure.
       </p>
 
+      <!-- CTA -->
       <div>
-        <button
-          class="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-blue-700 text-white font-medium hover:bg-blue-800 transition"
+        <a
+          href="#"
+          class="relative group inline-flex items-center justify-center px-6 py-3 rounded-lg bg-blue-700 text-white font-medium overflow-hidden transition hover:bg-blue-800"
         >
-          Rejoins-nous
-        </button>
+          <svg
+            viewBox="0 0 24 24"
+            class="absolute w-5 fill-white z-10 transition-all duration-700 -left-1/4 group-hover:left-3"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"
+            />
+          </svg>
+
+          <span
+            class="relative z-[1] transition-all duration-700 -translate-x-3 group-hover:translate-x-3"
+          >
+            Rejoins-nous
+          </span>
+
+          <span
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 bg-white rounded-full opacity-0 transition-all duration-700 group-hover:w-[220px] group-hover:h-[220px] group-hover:opacity-10"
+          ></span>
+
+          <svg
+            viewBox="0 0 24 24"
+            class="absolute w-5 fill-white z-10 transition-all duration-700 right-3 group-hover:-right-1/4"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"
+            />
+          </svg>
+        </a>
       </div>
     </div>
 
@@ -33,64 +61,63 @@
 
 <!-- ---------------------------------------------------------------------------------------------------------------------------------- -->
 
-<!-- SECTION 2 : BLOC SOMBRE -->
 <section class="bg-gray-900">
   <div class="max-w-screen-xl mx-auto py-8 px-6">
     <!-- Titre -->
-    <h2 class="text-m font-bold text-white max-w-2xl">
+    <h2 class="text-xl font-bold text-white max-w-2xl">
       Seras-tu assez résistant pour survivre à la nuit ?
     </h2>
 
-    <!-- Grille -->
-    <div
-      class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-12 justify-items-center"
-    >
-      <!-- Bloc 1 -->
-      <div class="flex flex-col gap-4">
-        <!-- Image -->
-        <div class="w-16 h-16 bg-gray-600"></div>
+ <!-- Grille -->
+<div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-12">
 
-        <!-- Texte -->
-        <div class="flex flex-col gap-2">
-          <h3 class="text-m font-bold text-white">Capacité d'analyse</h3>
+  <!-- Bloc 1 -->
+  <div class="flex flex-col gap-4 pr-6">
+    <div class="w-16 h-16 bg-gray-600"></div>
 
-          <p class="text-gray-400 max-w-[14rem]">
-            Selon ton rôle, tu devras détecter qui est qui, utiliser les bons
-            pouvoirs au bon moment.
-          </p>
-        </div>
-      </div>
+    <div class="flex flex-col gap-2">
+      <h3 class="text-m font-bold text-white">Capacité d'analyse</h3>
 
-      <!-- Bloc 2 -->
-      <div class="flex flex-col gap-4">
-        <div class="w-16 h-16 bg-gray-600"></div>
-
-        <div class="flex flex-col gap-2">
-          <h3 class="text-m font-bold text-white">Jeu d'acteur</h3>
-
-          <p class="text-gray-400 max-w-[14rem]">
-            Arriveras-tu à démêler le vrai du faux et à manipuler les débats
-            quand nécessaire ?
-          </p>
-        </div>
-      </div>
-
-      <!-- Bloc 3 -->
-      <div class="flex flex-col gap-4">
-        <div class="w-16 h-16 bg-gray-600"></div>
-
-        <div class="flex flex-col gap-2">
-          <h3 class="text-m font-bold text-white">Immersion totale</h3>
-
-          <p class="text-gray-400 max-w-[14rem]">
-            Des parties intenses où chaque décision peut changer le destin du
-            village.
-          </p>
-        </div>
-      </div>
+      <p class="text-gray-400">
+        Selon ton rôle, tu devras détecter qui est qui, utiliser les bons
+        pouvoirs au bon moment.
+      </p>
     </div>
   </div>
+
+  <!-- Bloc 2 -->
+  <div class="flex flex-col gap-4 px-3">
+    <div class="w-16 h-16 bg-gray-600"></div>
+
+    <div class="flex flex-col gap-2">
+      <h3 class="text-m font-bold text-white">Jeu d'acteur</h3>
+
+      <p class="text-gray-400">
+        Arriveras-tu à démêler le vrai du faux et à manipuler les débats
+        quand nécessaire ?
+      </p>
+    </div>
+  </div>
+
+  <!-- Bloc 3 -->
+  <div class="flex flex-col gap-4 pl-6">
+    <div class="w-16 h-16 bg-gray-600"></div>
+
+    <div class="flex flex-col gap-2">
+      <h3 class="text-m font-bold text-white">Immersion totale</h3>
+
+      <p class="text-gray-400">
+        Des parties intenses où chaque décision peut changer le destin du
+        village.
+      </p>
+    </div>
+  </div>
+
+</div>
+
+  </div>
 </section>
+
 
 <!-- ---------------------------------------------------------------------------------------------------------------------------------------------- -->
 
@@ -99,7 +126,7 @@
 <section class="bg-gray-700">
   <div class="max-w-screen-xl mx-auto py-8 px-6">
     <!-- Titre -->
-    <h2 class="text-m font-bold text-white max-w-2xl mb-16">
+    <h2 class="text-xl font-bold text-white max-w-2xl mb-16">
       Découvre les différentes rôles à incarner
     </h2>
 
@@ -113,12 +140,14 @@
           <h3 class="text-xl font-bold text-white">Le Villageois</h3>
 
           <p class="text-gray-400 mt-2">
-            Selon ton rôle, tu devras détecter qui est qui, utiliser les bons pouvoirs au bon moment, et bidule bidule 
-Mettre du texte ici qui parle des villageois
+            Selon ton rôle, tu devras détecter qui est qui, utiliser les bons
+            pouvoirs au bon moment, et bidule bidule Mettre du texte ici qui
+            parle des villageois
           </p>
 
           <p class="text-gray-400 text-sm mt-1">
-            Découvre tous les autres sous-rôles du villageois, tel que : nom, nom, nom, nom
+            Découvre tous les autres sous-rôles du villageois, tel que : nom,
+            nom, nom, nom
           </p>
         </div>
       </div>
@@ -131,12 +160,14 @@ Mettre du texte ici qui parle des villageois
           <h3 class="text-xl font-bold text-white">Sorcières</h3>
 
           <p class="text-gray-400 mt-2">
-            Selon ton rôle, tu devras détecter qui est qui, utiliser les bons pouvoirs au bon moment, et bidule bidule 
-            Mettre du texte ici qui parle des villageois
+            Selon ton rôle, tu devras détecter qui est qui, utiliser les bons
+            pouvoirs au bon moment, et bidule bidule Mettre du texte ici qui
+            parle des villageois
           </p>
 
           <p class="text-gray-400 text-sm mt-1">
-            Découvre tous les autres sous-rôles du villageois, tel que : nom, nom, nom, nom
+            Découvre tous les autres sous-rôles du villageois, tel que : nom,
+            nom, nom, nom
           </p>
         </div>
       </div>
@@ -149,36 +180,35 @@ Mettre du texte ici qui parle des villageois
           <h3 class="text-xl font-bold text-white">Indépendants</h3>
 
           <p class="text-gray-400 mt-2">
-            Selon ton rôle, tu devras détecter qui est qui, utiliser les bons pouvoirs au bon moment, et bidule bidule 
-          Mettre du texte ici qui parle des villageois
-
-
-
+            Selon ton rôle, tu devras détecter qui est qui, utiliser les bons
+            pouvoirs au bon moment, et bidule bidule Mettre du texte ici qui
+            parle des villageois
           </p>
 
           <p class="text-gray-400 text-sm mt-1">
-            Découvre tous les autres sous-rôles du villageois, tel que : nom, nom, nom, nom
+            Découvre tous les autres sous-rôles du villageois, tel que : nom,
+            nom, nom, nom
           </p>
         </div>
       </div>
     </div>
   </div>
 
-  
-<div class="flex justify-center mt-12 pb-6">
-  <a routerLink="/role"
-    class="px-6 py-3 rounded-lg bg-blue-700 text-white font-medium hover:bg-blue-800 transition"
-  >
-    Découvre les autres rôles ici !
-  </a>
-</div>
+  <div class="flex justify-center mt-12 pb-6">
+    <a
+      routerLink="/role"
+      class="px-6 py-3 rounded-lg bg-blue-700 text-white font-medium hover:bg-blue-800 transition"
+    >
+      Découvre les autres rôles ici !
+    </a>
+  </div>
 </section>
 
 <!-- ------------------------------------------------------------------------------------------------------------ -->
 
 <section class="bg-gray-900">
-    <div class="max-w-screen-xl mx-auto py-8 px-6">
-          <h4 class="text-m font-bold text-white max-w-2xl mb-16">
+  <div class="max-w-screen-xl mx-auto py-8 px-6">
+    <h4 class="text-xl font-bold text-white max-w-2xl mb-16">
       Rejoins une communauté de joueurs passionnés !
     </h4>
 
@@ -209,3 +239,5 @@ Mettre du texte ici qui parle des villageois
     </div>
   </div>
 </div> -->
+  </div>
+</section>

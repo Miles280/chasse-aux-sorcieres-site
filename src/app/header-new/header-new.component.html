@@ -30,6 +30,21 @@
     <ul
       class="hidden md:flex flex-1 justify-center gap-8 font-medium text-sm"
     >
+
+     <li>
+        <a routerLink="/home"
+          class="transition-colors"
+          [class.text-white]="!isScrolled"
+          [class.text-gray-900]="isScrolled"
+          [class.dark:text-white]="isScrolled"
+          [class.hover:text-blue-300]="!isScrolled"
+          [class.hover:text-blue-700]="isScrolled"
+        >
+          Accueil
+        </a>
+      </li>
+
+
       <li>
         <a routerLink="/team"
           class="transition-colors"
@@ -69,8 +84,10 @@
         </a>
       </li>
 
+      
+
       <!-- Utilisateur connecté + droits -->
-       @if (DiscordAuthService.isLoggedIn$|async) { 
+       @if ((DiscordAuthService.role$ | async)?.includes('ROLE_MJ')) { 
       <li>
         <a routerLink="/management"
           class="transition-colors"
