@@ -103,4 +103,9 @@ body {
   50% { opacity: 1; }
 }
 
-
+#bgImage {
+  background-image: url("/placeholder_background3.jpg");
+  background-size: cover;
+  background-position: right bottom;
+  background-repeat: no-repeat;
+}
