@@ -20,12 +20,12 @@ export class DiscordAuthService {
   }
 
   private loggedIn = new BehaviorSubject<boolean>(
-    !!localStorage.getItem('token')
+    !!localStorage.getItem('token'),
   );
   public isLoggedIn$ = this.loggedIn.asObservable();
 
   private roleSubject = new BehaviorSubject<string[]>(
-    JSON.parse(localStorage.getItem('roles') || '[]')
+    JSON.parse(localStorage.getItem('roles') || '[]'),
   );
   public role$ = this.roleSubject.asObservable();
 
@@ -33,7 +33,8 @@ export class DiscordAuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('roles');
     this.loggedIn.next(false);
-    this.router.navigate(['/login']);
+    this.roleSubject.next([]);
+    this.router.navigate(['']);
   }
 
   saveToken(token: string): void {
@@ -57,7 +58,7 @@ export class DiscordAuthService {
       '/',
       undefined,
       this.isProd,
-      'Strict'
+      'Strict',
     );
   }
 
@@ -72,7 +73,7 @@ export class DiscordAuthService {
           this.saveToken(response.token);
           this.saveRefreshToken(response.refreshToken);
           return response.token;
-        })
+        }),
       );
   }
 
