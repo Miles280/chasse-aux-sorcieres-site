@@ -1,17 +1,38 @@
 import { Routes } from '@angular/router';
-import { DiscordCallbackComponent } from './auth/discord-callback/discord-callback.component';
-import { HomeNewComponent } from './home-new/home-new.component';
-import { RoleComponent } from './header/role/role.component';
-import { RulesComponent } from './header/rules/rules.component';
-import { TeamComponent } from './header/team/team.component';
-import { ManagementComponent } from './header/management/management.component';
 
 export const routes: Routes = [
-  { path: '', component: HomeNewComponent },
-  { path: 'auth/discord/callback', component: DiscordCallbackComponent },
-  { path: 'role', component: RoleComponent },
-  { path: 'rules', component: RulesComponent },
-  { path: 'team', component: TeamComponent },
-  { path: 'management', component: ManagementComponent },
-  { path: '**', redirectTo: '' },
+  {
+    path: '',
+    loadChildren: () =>
+      import('./features/home/home.routes').then((m) => m.HOME_ROUTES),
+  },
+  {
+    path: 'regles',
+    loadChildren: () =>
+      import('./features/rules/rules.routes').then((m) => m.RULES_ROUTES),
+  },
+  {
+    path: 'roles',
+    loadChildren: () =>
+      import('./features/roles/roles.routes').then((m) => m.ROLES_ROUTES),
+  },
+  {
+    path: 'equipe',
+    loadChildren: () =>
+      import('./features/team/team.routes').then((m) => m.TEAM_ROUTES),
+  },
+  {
+    path: 'auth',
+    loadChildren: () =>
+      import('./features/auth/auth.routes').then((m) => m.AUTH_ROUTES),
+  },
+  {
+    path: 'gestion',
+    loadChildren: () =>
+      import('./features/admin/admin.routes').then((m) => m.ADMIN_ROUTES),
+  },
+  {
+    path: '**',
+    redirectTo: '',
+  },
 ];
