@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-staff-carousel',
+  selector: 'app-staff-section',
   standalone: true,
   imports: [],
-  templateUrl: './staff-carousel.component.html',
-  styleUrl: './staff-carousel.component.css',
+  templateUrl: './staff-section.component.html',
+  styleUrl: './staff-section.component.css',
 })
-export class StaffCarouselComponent {
+export class StaffSectionComponent {
   membres = [
     { nom: 'Miles 🔮', role: 'Administrateur', bg: 'bg-purple-800' },
     { nom: 'Agent du Chaos', role: 'Développeuse', bg: 'bg-indigo-800' },

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StaffCarouselComponent } from './staff-carousel.component';
+import { StaffCarouselComponent } from './staff-section.component';
 
 describe('StaffCarouselComponent', () => {
   let component: StaffCarouselComponent;
@@ -8,9 +8,8 @@ describe('StaffCarouselComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [StaffCarouselComponent]
-    })
-    .compileComponents();
+      imports: [StaffCarouselComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(StaffCarouselComponent);
     component = fixture.componentInstance;
