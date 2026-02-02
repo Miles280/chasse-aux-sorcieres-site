@@ -1,0 +1,29 @@
+@keyframes textShimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-nistrium {
+  background-size: 200% auto;
+  animation: textShimmer 8s ease-in-out infinite;
+}
+
+/* On définit une variable pour ton violet signature */
+:root {
+  --nistrium-violet: #6d28d9; /* violet-700 */
+  --nistrium-glow: rgba(109, 40, 217, 0.5);
+}
+
+#bgImage {
+  background-image: url("/placeholder_background3.jpg");
+  background-size: cover;
+  background-position: right bottom;
+  background-repeat: no-repeat;
+}
