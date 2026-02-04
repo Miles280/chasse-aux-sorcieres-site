@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Role } from 'src/app/core/models/role.model';
+import { RolesService } from 'src/app/core/services/roles.service';
 
 @Component({
   selector: 'app-roles-page',
@@ -8,9 +10,20 @@ import { Component } from '@angular/core';
   styleUrl: './roles-page.component.css',
 })
 export class RolesPageComponent {
+  private rolesService = inject(RolesService);
+
   activeTab: 'villageois' | 'sorcieres' | 'independants' = 'villageois';
 
   setTab(tab: 'villageois' | 'sorcieres' | 'independants') {
     this.activeTab = tab;
+  }
+
+  roles: Role[] = [];
+
+  ngOnInit(): void {
+    this.rolesService.getAllRoles().subscribe((roles) => {
+      this.roles = roles;
+      console.log(roles);
+    });
   }
 }
