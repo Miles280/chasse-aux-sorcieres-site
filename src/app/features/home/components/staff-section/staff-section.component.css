@@ -1,26 +1,49 @@
-@keyframes scroll {
+.marquee-track {
+  display: flex;
+  width: max-content;
+  /* On permet au contenu de dépasser mais les masques z-20 cachent les bords */
+}
+
+.animate-marquee {
+  animation: marquee 40s linear infinite; /* Ralenti un peu pour le côté "mystérieux" */
+}
+
+@keyframes marquee {
   0% {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translateX(-100%);
   }
 }
 
-.marquee-track {
-  display: flex;
-  width: max-content;
-  animation: scroll 30s linear infinite;
-}
-
-/* Pause au survol de la zone du carrousel */
-.marquee-track:hover {
+/* Optionnel : Adoucir le passage de la souris */
+.marquee-track:hover .animate-marquee {
   animation-play-state: paused;
 }
 
-/* Classe utilitaire personnalisée pour le scale précis de 1.12 */
-/* Note: On peut aussi utiliser group-hover:scale-110 si 1.10 suffit */
-.group-hover\:scale-112:hover,
-.group:hover .group-hover\:scale-112 {
-  transform: scale(1.12);
+/* Ce masque crée un fondu transparent aux deux extrémités du bloc */
+.mask-edge {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 15%,
+    black 85%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 15%,
+    black 85%,
+    transparent 100%
+  );
+}
+
+img {
+  transition: transform 0.5s ease;
+}
+
+.group:hover img {
+  transform: scale(1.1);
 }
