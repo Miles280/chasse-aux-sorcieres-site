@@ -6,7 +6,10 @@ export const adminGuard: CanActivateFn = () => {
   const authService = inject(DiscordAuthService);
   const router = inject(Router);
 
-  if (authService.isLoggedIn() && authService.getRoles()) {
+  if (
+    authService.isLoggedIn() &&
+    authService.getRoles().includes('ROLE_ADMIN')
+  ) {
     return true;
   }
 

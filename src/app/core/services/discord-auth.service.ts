@@ -1,9 +1,9 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
-import { CookieService } from 'ngx-cookie-service';
+// On supprime CookieService, on n'en a plus besoin !
 
 @Injectable({
   providedIn: 'root',
@@ -11,17 +11,11 @@ import { CookieService } from 'ngx-cookie-service';
 export class DiscordAuthService {
   private router = inject(Router);
   private http = inject(HttpClient);
-  private cookieService = inject(CookieService);
   private env = environment;
-  private isProd = environment.production;
 
-  exchangeCode(payload: { code: string }): Observable<any> {
-    return this.http.post(`${this.env.apiUrl}/auth/login`, payload);
-  }
-
-  private loggedIn = new BehaviorSubject<boolean>(
-    !!localStorage.getItem('token'),
-  );
+  // On garde le token en localStorage pour le moment (Access Token court terme)
+  // pour éviter que tu sois déconnecté si tu rafraîchis la page (F5).
+  private loggedIn = new BehaviorSubject<boolean>(!!this.getToken());
   public isLoggedIn$ = this.loggedIn.asObservable();
 
   private roleSubject = new BehaviorSubject<string[]>(
@@ -29,12 +23,74 @@ export class DiscordAuthService {
   );
   public role$ = this.roleSubject.asObservable();
 
+  /**
+   * LOGIN
+   * Le serveur va renvoyer le token (body) et mettre le refreshToken (cookie)
+   */
+  exchangeCode(payload: { code: string }): Observable<any> {
+    return this.http
+      .post(`${this.env.apiUrl}/auth/login`, payload, {
+        withCredentials: true, // IMPORTANT : Pour accepter le cookie du serveur
+      })
+      .pipe(
+        tap((response: any) => {
+          // On ne reçoit plus le refreshToken ici, c'est normal !
+          this.saveToken(response.token);
+
+          // Optionnel : si ton backend renvoie déjà les rôles dans 'user',
+          // tu peux les set ici directement sans décoder le token.
+        }),
+      );
+  }
+
+  /**
+   * LOGOUT
+   * On doit appeler le serveur pour qu'il supprime le cookie HttpOnly
+   */
   logout(): void {
+    // 1. Appel au serveur pour tuer le cookie
+    this.http
+      .post(
+        `${this.env.apiUrl}/auth/logout`,
+        {},
+        {
+          withCredentials: true,
+        },
+      )
+      .subscribe({
+        next: () => this.finalizeLogout(),
+        error: () => this.finalizeLogout(), // On logout même si l'API plante
+      });
+  }
+
+  private finalizeLogout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('roles');
     this.loggedIn.next(false);
     this.roleSubject.next([]);
     this.router.navigate(['']);
+  }
+
+  /**
+   * REFRESH TOKEN
+   * On n'envoie RIEN dans le body. Le navigateur envoie le cookie tout seul.
+   */
+  refreshToken(): Observable<string> {
+    return this.http
+      .post<{ token: string }>(
+        `${this.env.apiUrl}/auth/refresh`,
+        {},
+        {
+          withCredentials: true, // IMPORTANT : Pour envoyer le cookie au serveur
+        },
+      )
+      .pipe(
+        map((response) => {
+          this.saveToken(response.token);
+          // Le nouveau refreshToken est mis à jour automatiquement par le serveur via Set-Cookie
+          return response.token;
+        }),
+      );
   }
 
   saveToken(token: string): void {
@@ -50,32 +106,7 @@ export class DiscordAuthService {
     }
   }
 
-  saveRefreshToken(token: string) {
-    this.cookieService.set(
-      'refreshToken',
-      token,
-      30,
-      '/',
-      undefined,
-      this.isProd,
-      'Strict',
-    );
-  }
-
-  refreshToken(): Observable<string> {
-    const refreshToken = this.cookieService.get('refreshToken');
-    return this.http
-      .post<{ token: string; refreshToken: string }>('/api/auth/refresh', {
-        refreshToken,
-      })
-      .pipe(
-        map((response) => {
-          this.saveToken(response.token);
-          this.saveRefreshToken(response.refreshToken);
-          return response.token;
-        }),
-      );
-  }
+  // --- Méthodes utilitaires inchangées ou simplifiées ---
 
   private decodeToken(token: string): any {
     try {
@@ -85,6 +116,10 @@ export class DiscordAuthService {
       console.error('Erreur lors du décodage du token', e);
       return null;
     }
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem('token');
   }
 
   isLoggedIn(): boolean {
@@ -98,26 +133,26 @@ export class DiscordAuthService {
     return payload.exp > now;
   }
 
-  getToken(): string | null {
-    return localStorage.getItem('token');
-  }
-
-  isTokenExpired(): boolean {
-    const token = this.getToken();
-    if (!token) return true;
-
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    const exp = payload.exp;
-    const now = Math.floor(Date.now() / 1000);
-
-    return exp < now;
-  }
-
   getRoles(): string[] {
     return JSON.parse(localStorage.getItem('roles') || '[]');
   }
 
   isStaff(): boolean {
     return this.getRoles().includes('MJ');
+  }
+
+  checkAuthStatus(): void {
+    const token = this.getToken();
+
+    // Si on n'a pas de token, on tente quand même un refresh "silencieux"
+    // car on a peut-être un cookie HttpOnly valide !
+    if (!token) {
+      this.refreshToken().subscribe({
+        next: () => console.log('Reconnexion automatique réussie'),
+        error: () => {
+          this.finalizeLogout();
+        },
+      });
+    }
   }
 }
