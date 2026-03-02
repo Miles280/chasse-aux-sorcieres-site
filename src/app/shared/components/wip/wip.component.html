@@ -15,52 +15,61 @@
 <section class="min-h-screen flex items-center relative z-10">
   <div class="max-w-6xl mx-auto px-6 w-full">
     <div class="grid md:grid-cols-2 gap-16 items-center">
-
       <!-- Texte gauche -->
       <div class="text-center md:text-left">
-        <h1 class="text-4xl md:text-6xl font-extrabold text-white font-test mb-6">
+        <h1
+          class="text-4xl md:text-6xl font-extrabold text-white font-test mb-6"
+        >
           Site en construction
         </h1>
 
-        <p class="text-gray-400 text-lg leading-relaxed mb-8 max-w-lg mx-auto md:mx-0">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-          veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-          commodo consequat.
+        <p
+          class="text-gray-400 text-lg leading-relaxed mb-8 max-w-lg mx-auto md:mx-0"
+        >
+          Le site est actuellement en cours de construction, n'hésitez pas à repasser rapidement ou de suivre les informations sur le discord juste ici (ajouter bouton ?)
         </p>
 
         <a
           routerLink="/"
-          class="inline-flex items-center gap-3 px-8 py-3 bg-gray-900 border border-gray-600 rounded-full text-white font-medium transition-all hover:bg-gray-800 hover:border-blue-500 hover:shadow-lg hover:shadow-blue-900/20"
+          class="relative group inline-flex items-center justify-start w-[19rem] px-10 py-5 rounded-xl animate-btn-glow bg-gradient-to-r text-white from-violet-600 via-fuchsia-500 to-violet-600 font-bold overflow-hidden transition-all hover:shadow-[0_0_30px_rgba(109,40,217,0.4)]"
         >
-          Retour à l'accueil
           <svg
-            class="w-4 h-4 transition-transform group-hover:translate-x-1"
-            fill="none"
-            stroke="currentColor"
             viewBox="0 0 24 24"
+            class="absolute w-6 fill-white transition-all duration-500 -left-10 group-hover:left-6"
+            xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M17 8l4 4m0 0l-4 4m4-4H3"
+              d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"
+            />
+          </svg>
+
+          <span
+            class="relative z-10 transition-all duration-500 group-hover:translate-x-6 text-xl"
+          >
+            Retour à l'accueil
+          </span>
+
+          <svg
+            viewBox="0 0 24 24"
+            class="absolute w-6 fill-white transition-all duration-500 right-6 group-hover:-right-10"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"
             />
           </svg>
         </a>
       </div>
 
       <div class="flex justify-center md:justify-end">
-
-          <img
-            src="/wip2.png"
-            alt="Illustration en construction"
-            class="h-[450px] w-auto object-contain rounded-xl"
-          />
-        </div>
+        <img
+          src="/wip2.png"
+          alt="Illustration en construction"
+          class="h-[450px] w-auto object-contain rounded-xl"
+        />
       </div>
-
     </div>
+  </div>
 
   <div
     class="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(139,92,246,0.03)_0%,_transparent_70%)] pointer-events-none z-[-1]"
