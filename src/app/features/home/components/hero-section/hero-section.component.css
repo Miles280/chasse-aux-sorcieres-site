@@ -1,0 +1,37 @@
+/* Animation de base */
+@keyframes textShimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+/* CLASSE 1 : Pour le TITRE et le mot NISTRIUM */
+/* Ça active l'animation ET ça force la découpe autour des lettres */
+.animate-text-glow {
+  background-size: 200% auto;
+  animation: textShimmer 4s linear infinite;
+
+  /* C'est ces lignes qui manquaient ou qui sautaient : */
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+}
+
+/* CLASSE 2 : Pour le BOUTON */
+/* Ça active juste l'animation du fond, sans toucher au texte */
+.animate-btn-glow {
+  background-size: 200% auto;
+  animation: textShimmer 4s linear infinite;
+  color: white !important; /* On force le texte en blanc */
+}
+
+/* Ton image de fond */
+#bgImage {
+  background-image: url("/placeholder_background3.jpg");
+  background-size: cover;
+  background-position: right bottom;
+  background-repeat: no-repeat;
+}

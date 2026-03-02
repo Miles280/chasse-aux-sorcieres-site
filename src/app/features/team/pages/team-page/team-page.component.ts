@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { WipComponent } from 'src/app/shared/components/wip/wip.component';
 
 @Component({
   selector: 'app-team-page',
   standalone: true,
-  imports: [],
+  imports: [WipComponent],
   templateUrl: './team-page.component.html',
   styleUrl: './team-page.component.css'
 })

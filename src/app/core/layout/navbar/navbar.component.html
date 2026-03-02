@@ -1,13 +1,17 @@
+  <!-- Obligé d'écrire comme ça sinon Angular ne gère pas la transparence -->
 <nav
   class="fixed top-0 w-full z-50 transition-all duration-300"
   [class.bg-transparent]="!isScrolled"
-  [class.bg-white]="isScrolled"
+  [class.bg-black]="isScrolled"
   [class.bg-opacity-90]="isScrolled"
   [class.backdrop-blur-md]="isScrolled"
   [class.shadow-md]="isScrolled"
-  [class.dark:bg-gray-900]="isScrolled"
-  [class.dark:bg-opacity-90]="isScrolled"
+  [ngClass]="{
+    'bg-transparent': !isScrolled,
+    'bg-[#08040e]/80 backdrop-blur-md shadow-lg': isScrolled
+  }"  [class.dark:bg-opacity-90]="isScrolled"
 >
+
   <div
     class="max-w-screen-xl mx-auto px-4 h-20 flex items-center justify-between"
   >
@@ -188,7 +192,7 @@
       [class.bg-white]="!isScrolled && !mobile"
       [class.text-blue-700]="!isScrolled && !mobile"
       [class.hover:bg-gray-100]="!isScrolled && !mobile"
-      [class.bg-blue-700]="isScrolled || mobile"
+      [class.bg-purple-500]="isScrolled || mobile"
       [class.text-white]="isScrolled || mobile"
       [class.hover:bg-blue-800]="isScrolled || mobile"
     >

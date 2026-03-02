@@ -1,4 +1,4 @@
-<section class="min-h-screen pt-24" id="bgImage">
+<section class="bg-[#141025] min-h-screen pt-24" id="bgImage ">
   <!-- ================= HEADER ================= -->
   <div
     class="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-3 px-6 mt-20"
@@ -53,85 +53,42 @@
 
   <!-- ================= CONTENU À MODIFIER ENSUITE AVEC LOOP ================= -->
   <div class="max-w-screen-xl mx-auto px-6 mt-20">
-    @if (activeTab === "villageois") {
-      <div class="animate-fade">
+
+  <div class="animate-fade">
+
+    <div
+      class="grid grid-cols-1 md:grid-cols-3 gap-8 place-items-center max-w-4xl mx-auto"
+    >
+
+      @for (role of filteredRoles; track role.id) {
         <div
-          class="grid grid-cols-1 md:grid-cols-3 gap-8 place-items-center max-w-4xl mx-auto"
+          class="border border-green-600/30 rounded-lg p-6 w-full max-w-xs flex flex-col bg-gray-900"
         >
-          <!-- Carte -->
-          <div
-            class="border border-green-600/30 rounded-lg p-6 w-full max-w-xs flex flex-col bg-gray-900"
-          >
-            <div class="w-10 h-10 bg-gray-600"></div>
-            <h4 class="text-white font-semibold">Rôle 1</h4>
-            <p class="text-gray-400 text-sm">
-              Description courte du rôle, son objectif et ses particularités.
-            </p>
-          </div>
+          <div class="w-10 h-10 bg-gray-600 mb-4"></div>
 
-          <div
-            class="border border-green-600/30 rounded-lg p-6 w-full max-w-xs flex flex-col bg-gray-900"
-          >
-            <div class="w-10 h-10 bg-gray-600"></div>
-            <h4 class="text-white font-semibold">Rôle 2</h4>
-            <p class="text-gray-400 text-sm">
-              Description courte du rôle, son objectif et ses particularités.
-            </p>
-          </div>
+          <h4 class="text-white font-semibold">
+            {{ role.name }}
+          </h4>
 
-          <div
-            class="border border-green-600/30 rounded-lg p-6 w-full max-w-xs flex flex-col bg-gray-900"
-          >
-            <div class="w-10 h-10 bg-gray-600"></div>
-            <h4 class="text-white font-semibold">Rôle 3</h4>
-            <p class="text-gray-400 text-sm">
-              Description courte du rôle, son objectif et ses particularités.
-            </p>
-          </div>
+          <p class="text-gray-400 text-sm mt-2">
+            {{ role.description }}
+          </p>
 
-          <div
-            class="border border-green-600/30 rounded-lg p-6 w-full max-w-xs flex flex-col bg-gray-800"
-          >
-            <div class="w-10 h-10 bg-gray-600"></div>
-            <h4 class="text-white font-semibold">Rôle 4</h4>
-            <p class="text-gray-400 text-sm">
-              Description courte du rôle, son objectif et ses particularités.
-            </p>
-          </div>
-
-          <div
-            class="border border-green-600/30 rounded-lg p-6 w-full max-w-xs flex flex-col bg-gray-800"
-          >
-            <div class="w-10 h-10 bg-gray-600"></div>
-            <h4 class="text-white font-semibold">Rôle 5</h4>
-            <p class="text-gray-400 text-sm">
-              Description courte du rôle, son objectif et ses particularités.
-            </p>
-          </div>
-
-          <div
-            class="border border-green-600/30 rounded-lg p-6 w-full max-w-xs flex flex-col bg-gray-800"
-          >
-            <div class="w-10 h-10 bg-gray-600"></div>
-            <h4 class="text-white font-semibold">Rôle 6</h4>
-            <p class="text-gray-400 text-sm">
-              Description courte du rôle, son objectif et ses particularités.
-            </p>
-          </div>
+          <p class="text-xs text-gray-500 mt-4">
+            Minimum joueurs : {{ role.minPlayer }}
+          </p>
         </div>
+      }
+
+    </div>
+
+    @if (filteredRoles.length === 0) {
+      <div class="text-center text-gray-400 mt-10">
+        Aucun rôle disponible pour cette catégorie.
       </div>
     }
 
-    @if (activeTab === "sorcieres") {
-      <div class="animate-fade text-white">
-        <h3 class="text-xl font-bold">Contenu Sorcières à venir</h3>
-      </div>
-    }
-
-    @if (activeTab === "independants") {
-      <div class="animate-fade text-white">
-        <h3 class="text-xl font-bold">Contenu Indépendants à venir</h3>
-      </div>
-    }
   </div>
+
+</div>
 </section>

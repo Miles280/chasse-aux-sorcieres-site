@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FeaturedRolesComponent } from './featured-roles.component';
+import { WipComponent } from './wip.component';
 
-describe('FeaturedRolesComponent', () => {
-  let component: FeaturedRolesComponent;
-  let fixture: ComponentFixture<FeaturedRolesComponent>;
+describe('WipComponent', () => {
+  let component: WipComponent;
+  let fixture: ComponentFixture<WipComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FeaturedRolesComponent]
+      imports: [WipComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(FeaturedRolesComponent);
+    fixture = TestBed.createComponent(WipComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

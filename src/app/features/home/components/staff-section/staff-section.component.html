@@ -1,0 +1,111 @@
+<section class="py-16 relative bg-transparent mt-4 mb-4">
+  <div class="max-w-screen-xl mx-auto px-6 text-center mb-12">
+    <h4
+      class="text-sm md:text-base font-bold text-violet-400 uppercase tracking-[0.3em] mb-2"
+    >
+      Communauté
+    </h4>
+    <h2 class="text-2xl md:text-3xl font-bold text-white font-test">
+      Le Staff de Nistrium
+    </h2>
+  </div>
+
+  <div class="max-w-screen-xl mx-auto px-6">
+    <div class="relative overflow-hidden mask-edge">
+      <div class="marquee-track flex py-4">
+        <div class="flex gap-12 md:gap-20 pr-12 md:pr-20 animate-marquee">
+          @for (member of membres; track $index) {
+            <div
+              class="group flex flex-col items-center w-32 md:w-40 flex-shrink-0 cursor-default"
+            >
+              <div class="relative mb-4">
+                <div
+                  class="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-2 border-violet-500/20 bg-gray-900/50 group-hover:scale-110 group-hover:border-violet-500 transition-all duration-500 flex items-center justify-center"
+                >
+                  @if (member.image) {
+                    <img
+                      [src]="member.image"
+                      [alt]="member.nom"
+                      class="w-full h-full object-cover shadow-lg"
+                    />
+                  } @else {
+                    <div
+                      class="w-full h-full flex items-center justify-center {{
+                        member.bg
+                      }}"
+                    >
+                      <span class="text-white text-2xl font-bold">{{
+                        member.nom[0]
+                      }}</span>
+                    </div>
+                  }
+                </div>
+                <div
+                  class="absolute bottom-1 right-1 w-4 h-4 bg-green-500 border-2 border-[#0a0a0c] rounded-full z-10"
+                ></div>
+              </div>
+              <h3
+                class="text-base font-bold text-white/90 group-hover:text-white transition-colors text-center"
+              >
+                {{ member.nom }}
+              </h3>
+              <p
+                class="text-[10px] text-violet-400/70 uppercase tracking-widest font-bold text-center"
+              >
+                {{ member.role }}
+              </p>
+            </div>
+          }
+        </div>
+
+        <div
+          class="flex gap-12 md:gap-20 pr-12 md:pr-20 animate-marquee"
+          aria-hidden="true"
+        >
+          @for (member of membres; track $index) {
+            <div
+              class="group flex flex-col items-center w-32 md:w-40 flex-shrink-0 cursor-default"
+            >
+              <div class="relative mb-4">
+                <div
+                  class="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-2 border-violet-500/20 bg-gray-900/50 group-hover:scale-110 group-hover:border-violet-500 transition-all duration-500 flex items-center justify-center"
+                >
+                  @if (member.image) {
+                    <img
+                      [src]="member.image"
+                      [alt]="member.nom"
+                      class="w-full h-full object-cover shadow-lg"
+                    />
+                  } @else {
+                    <div
+                      class="w-full h-full flex items-center justify-center {{
+                        member.bg
+                      }}"
+                    >
+                      <span class="text-white text-2xl font-bold">{{
+                        member.nom[0]
+                      }}</span>
+                    </div>
+                  }
+                </div>
+                <div
+                  class="absolute bottom-1 right-1 w-4 h-4 bg-green-500 border-2 border-[#0a0a0c] rounded-full z-10"
+                ></div>
+              </div>
+              <h3
+                class="text-base font-bold text-white/90 group-hover:text-white transition-colors text-center"
+              >
+                {{ member.nom }}
+              </h3>
+              <p
+                class="text-[10px] text-violet-400/70 uppercase tracking-widest font-bold text-center"
+              >
+                {{ member.role }}
+              </p>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
