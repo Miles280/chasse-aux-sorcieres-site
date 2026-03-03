@@ -1,0 +1,79 @@
+<div class="fixed inset-0 bg-[#0f0d19] z-[-1] overflow-hidden">
+  <div
+    class="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-violet-800/20 blur-[130px] rounded-full animate-pulse-slow"
+  ></div>
+
+  <div
+    class="absolute top-[30%] right-[0%] w-[700px] h-[700px] bg-blue-800/10 blur-[150px] rounded-full animate-float"
+  ></div>
+
+  <div
+    class="absolute bottom-[-10%] left-[25%] w-[900px] h-[600px] bg-violet-900/15 blur-[150px] rounded-full animate-pulse-slow"
+  ></div>
+</div>
+
+<section class="min-h-screen flex items-center relative z-10">
+  <div class="max-w-6xl mx-auto px-6 w-full">
+    <div class="grid md:grid-cols-2 gap-16 items-center">
+      <!-- Texte gauche -->
+      <div class="text-center md:text-left">
+        <h1
+          class="text-4xl md:text-6xl font-extrabold text-white font-test mb-6"
+        >
+          Site en construction
+        </h1>
+
+        <p
+          class="text-gray-400 text-lg leading-relaxed mb-8 max-w-lg mx-auto md:mx-0"
+        >
+          Le site est en développement, repassez plus tard ! <br />
+          Pour toutes informations supplémentaire, rejoignez-nous sur le serveur
+          et contactez un développeur.
+        </p>
+
+        <a
+          routerLink="/"
+          class="relative group inline-flex items-center justify-start w-[19rem] px-10 py-5 rounded-xl animate-btn-glow bg-gradient-to-r text-white from-violet-600 via-fuchsia-500 to-violet-600 font-bold overflow-hidden transition-all hover:shadow-[0_0_30px_rgba(109,40,217,0.4)]"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            class="absolute w-6 fill-white transition-all duration-500 -left-10 group-hover:left-6"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"
+            />
+          </svg>
+
+          <span
+            class="relative z-10 transition-all duration-500 group-hover:translate-x-6 text-xl"
+          >
+            Retour à l'accueil
+          </span>
+
+          <svg
+            viewBox="0 0 24 24"
+            class="absolute w-6 fill-white transition-all duration-500 right-6 group-hover:-right-10"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"
+            />
+          </svg>
+        </a>
+      </div>
+
+      <div class="flex justify-center md:justify-end">
+        <img
+          src="/wip2.png"
+          alt="Illustration en construction"
+          class="h-[450px] w-auto object-contain rounded-xl"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(139,92,246,0.03)_0%,_transparent_70%)] pointer-events-none z-[-1]"
+  ></div>
+</section>
