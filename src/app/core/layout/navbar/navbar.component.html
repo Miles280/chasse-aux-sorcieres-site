@@ -1,17 +1,13 @@
-  <!-- Obligé d'écrire comme ça sinon Angular ne gère pas la transparence -->
 <nav
   class="fixed top-0 w-full z-50 transition-all duration-300"
   [class.bg-transparent]="!isScrolled"
-  [class.bg-black]="isScrolled"
-  [class.bg-opacity-90]="isScrolled"
   [class.backdrop-blur-md]="isScrolled"
-  [class.shadow-md]="isScrolled"
+  [class.shadow-lg]="isScrolled"
   [ngClass]="{
     'bg-transparent': !isScrolled,
-    'bg-[#08040e]/80 backdrop-blur-md shadow-lg': isScrolled
-  }"  [class.dark:bg-opacity-90]="isScrolled"
+    'bg-[#08040e]/80': isScrolled,
+  }"
 >
-
   <div
     class="max-w-screen-xl mx-auto px-4 h-20 flex items-center justify-between"
   >
@@ -122,14 +118,14 @@
   </li>
   <li>
     <a
-      routerLink="/equipe"
+      routerLink="/regles"
       (click)="closeMenu()"
       class="transition-colors hover:text-blue-400"
       [class.text-white]="!isScrolled && !mobile"
       [class.text-gray-900]="isScrolled && !mobile"
       [class.dark:text-white]="isScrolled && !mobile"
     >
-      L'équipe
+      Règles
     </a>
   </li>
   <li>
@@ -146,14 +142,14 @@
   </li>
   <li>
     <a
-      routerLink="/regles"
+      routerLink="/equipe"
       (click)="closeMenu()"
       class="transition-colors hover:text-blue-400"
       [class.text-white]="!isScrolled && !mobile"
       [class.text-gray-900]="isScrolled && !mobile"
       [class.dark:text-white]="isScrolled && !mobile"
     >
-      Règles
+      L'équipe
     </a>
   </li>
   @if ((authService.role$ | async)?.includes("ROLE_MJ")) {
@@ -176,25 +172,16 @@
   @if (authService.isLoggedIn$ | async) {
     <button
       (click)="logout()"
-      class="rounded-lg text-sm px-6 py-2.5 transition-all font-medium border text-white"
+      class="rounded-lg text-sm px-6 py-2.5 transition-all duration-300 font-medium border border-purple-600 text-white hover:bg-purple-600"
       [class.w-full]="mobile"
-      [class.bg-transparent]="!isScrolled && !mobile"
-      [class.border-white]="!isScrolled && !mobile"
-      [class.hover:bg-white]="!isScrolled && !mobile"
     >
       Déconnexion
     </button>
   } @else {
     <button
       (click)="loginWithDiscord(); closeMenu()"
-      class="rounded-lg text-sm px-6 py-2.5 transition-all font-medium"
+      class="rounded-lg text-sm px-6 py-2.5 transition-all duration-300 font-medium bg-purple-600 text-white hover:bg-purple-700"
       [class.w-full]="mobile"
-      [class.bg-white]="!isScrolled && !mobile"
-      [class.text-blue-700]="!isScrolled && !mobile"
-      [class.hover:bg-gray-100]="!isScrolled && !mobile"
-      [class.bg-purple-500]="isScrolled || mobile"
-      [class.text-white]="isScrolled || mobile"
-      [class.hover:bg-blue-800]="isScrolled || mobile"
     >
       Connexion
     </button>

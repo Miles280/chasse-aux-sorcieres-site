@@ -1,96 +1,91 @@
-<section class="py-16 overflow-hidden">
+<section class="py-24 overflow-hidden">
   <div class="max-w-6xl mx-auto px-6">
-    
-    <div class="text-center mb-16 reveal">
-      <h2 class="text-2xl md:text-4xl font-bold text-white font-test mb-4">
+    <div class="text-center mb-20 reveal">
+      <h2
+        class="text-2xl md:text-3xl font-extrabold text-purple-500 font-test mb-2"
+      >
         Choisissez votre destin
       </h2>
-      <p class="text-gray-400 max-w-2xl mx-auto text-sm md:text-base">
-        À Nistrium, personne n'est innocent. Découvrez les forces qui
-        s'affrontent dans l'ombre.
+      <p class="text-gray-400 max-w-2xl mx-auto">
+        À Nistrium, personne ne se connait réellement. Découvrez les forces
+        cachées qui s'affrontent dans l'ombre.
       </p>
     </div>
 
-    <div class="flex flex-col gap-16">
-
-      <!-- VILLAGEOIS -->
-      <div class="flex flex-col md:flex-row items-center gap-8 reveal">
-        <div class="w-full md:w-1/3 flex justify-center md:justify-end">
+    <div class="flex flex-col gap-8 w-full">
+      <div class="flex justify-start reveal">
+        <div class="flex flex-col md:flex-row items-center gap-8 max-w-3xl">
           <div
-            class="card-immersive w-64 h-80 bg-gray-700 rounded-xl rotate-3 border-4 border-villageois shadow-xl shadow-green-900/20 relative overflow-hidden mr-6"
+            class="card-immersive w-64 h-80 bg-gray-700 rounded-xl rotate-3 border-4 border-villageois shrink-0"
           >
             <img
               src="/Villageois.png"
               alt="Villageois"
-              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 hover:scale-110"
+              class="w-full h-full object-cover rounded-lg"
             />
           </div>
-        </div>
-        <div class="w-full md:w-2/3 text-center md:text-left">
-          <h3 class="text-2xl font-bold text-villageois mb-3 font-test">
-            Les Défenseurs du Village
-          </h3>
-          <p class="text-gray-300 text-base mb-5 leading-relaxed">
-            Majoritaires mais ignorants, leur force réside dans le nombre et la
-            déduction. Leur objectif est simple : éradiquer le mal avant qu'il
-            ne soit trop tard. Parmi eux se cachent des rôles puissants : la
-            Voyante, le Chevalier, ou encore le Chasseur.
-          </p>
+          <div class="text-center md:text-left">
+            <h3 class="text-2xl font-bold text-villageois mb-3 font-test">
+              Les Villageois
+            </h3>
+            <p class="text-gray-300 leading-relaxed">
+              Majoritaires mais ignorants, leur force réside dans le nombre et
+              la déduction. Leur objectif est simple : éradiquer le mal avant
+              qu'il ne soit trop tard.
+            </p>
+          </div>
         </div>
       </div>
 
-      <!-- SORCIÈRES -->
-      <div class="flex flex-col md:flex-row-reverse items-center gap-8 reveal">
-        <div class="w-full md:w-1/3 flex justify-center md:justify-start">
+      <div class="flex justify-end reveal">
+        <div
+          class="flex flex-col md:flex-row-reverse items-center gap-8 max-w-3xl"
+        >
           <div
-            class="card-immersive w-64 h-80 bg-gray-700 rounded-xl -rotate-3 border-4 border-sorcières shadow-xl shadow-red-900/20 relative overflow-hidden ml-6"
+            class="card-immersive w-64 h-80 bg-gray-700 rounded-xl -rotate-3 border-4 border-sorcières shrink-0"
           >
             <img
               src="/Sorcières.png"
               alt="Sorcières"
-              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 hover:scale-110"
+              class="w-full h-full object-cover rounded-lg"
             />
           </div>
-        </div>
-        <div class="w-full md:w-2/3 text-center md:text-right">
-          <h3 class="text-2xl font-bold text-sorcières mb-3 font-test">
-            Le Coven des Sorcières
-          </h3>
-          <p class="text-gray-300 text-base mb-5 leading-relaxed">
-            Elles connaissent leurs alliés et frappent chaque nuit.
-            Manipulatrices expertes, elles doivent se fondre dans la masse le
-            jour pour mieux égorger la nuit. Leur victoire est totale si le
-            village est réduit à néant.
-          </p>
+          <div class="text-center md:text-right">
+            <h3 class="text-2xl font-bold text-sorcières mb-3 font-test">
+              Les Sorcières
+            </h3>
+            <p class="text-gray-300 leading-relaxed">
+              Elles connaissent leurs alliés et frappent chaque nuit.
+              Manipulatrices expertes, elles doivent se fondre dans la masse le
+              jour pour mieux égorger la nuit.
+            </p>
+          </div>
         </div>
       </div>
 
-      <!-- INDÉPENDANTS -->
-      <div class="flex flex-col md:flex-row items-center gap-8 reveal">
-        <div class="w-full md:w-1/3 flex justify-center md:justify-end">
+      <div class="flex justify-start reveal">
+        <div class="flex flex-col md:flex-row items-center gap-8 max-w-3xl">
           <div
-            class="card-immersive w-64 h-80 bg-gray-700 rounded-xl rotate-2 border-4 border-indépendants shadow-xl shadow-orange-900/20 relative overflow-hidden mr-6"
+            class="card-immersive w-64 h-80 bg-gray-700 rounded-xl rotate-2 border-4 border-indépendants shrink-0"
           >
             <img
               src="/Indépendants.png"
               alt="Indépendants"
-              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 hover:scale-110"
+              class="w-full h-full object-cover rounded-lg"
             />
           </div>
-        </div>
-        <div class="w-full md:w-2/3 text-center md:text-left">
-          <h3 class="text-2xl font-bold text-indépendants mb-3 font-test">
-            Les Indépendants
-          </h3>
-          <p class="text-gray-300 text-base mb-5 leading-relaxed">
-            Ni gentils, ni méchants... ils jouent pour eux-mêmes. Leurs
-            objectifs sont uniques : survivre seul, assassiner une cible
-            précise, ou semer le chaos total. Ce sont les électrons libres qui
-            font basculer les parties.
-          </p>
+          <div class="text-center md:text-left">
+            <h3 class="text-2xl font-bold text-indépendants mb-3 font-test">
+              Les Indépendants
+            </h3>
+            <p class="text-gray-300 leading-relaxed">
+              Ni gentils, ni méchants... ils jouent pour eux-mêmes. Leurs
+              objectifs sont uniques : survivre seul, accomplir une tâche
+              précise, ou semer le chaos total.
+            </p>
+          </div>
         </div>
       </div>
-
     </div>
   </div>
 </section>

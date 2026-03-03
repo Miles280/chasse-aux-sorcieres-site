@@ -1,11 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Role } from 'src/app/core/models/role.model';
 import { RolesService } from 'src/app/core/services/roles.service';
+import { WipComponent } from 'src/app/shared/components/wip/wip.component';
 
 @Component({
   selector: 'app-roles-page',
   standalone: true,
-  imports: [],
+  imports: [WipComponent],
   templateUrl: './roles-page.component.html',
   styleUrl: './roles-page.component.css',
 })
@@ -18,6 +19,7 @@ export class RolesPageComponent implements OnInit {
     this.activeTab = tab;
   }
 
+  filteredRoles: Role[] = [];
   roles: Role[] = [];
 
   ngOnInit(): void {

@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FeaturedRolesComponent } from './roles-preview-section.component';
+import { RolesPreviewSectionComponent } from './roles-preview-section.component';
 
 describe('FeaturedRolesComponent', () => {
-  let component: FeaturedRolesComponent;
-  let fixture: ComponentFixture<FeaturedRolesComponent>;
+  let component: RolesPreviewSectionComponent;
+  let fixture: ComponentFixture<RolesPreviewSectionComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FeaturedRolesComponent],
+      imports: [RolesPreviewSectionComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(FeaturedRolesComponent);
+    fixture = TestBed.createComponent(RolesPreviewSectionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
