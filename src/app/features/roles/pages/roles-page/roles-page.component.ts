@@ -11,7 +11,6 @@ import { WipComponent } from 'src/app/shared/components/wip/wip.component';
   templateUrl: './roles-page.component.html',
   styleUrl: './roles-page.component.css',
 })
-
 export class RolesPageComponent implements OnInit {
   private rolesService = inject(RolesService);
 
@@ -20,8 +19,9 @@ export class RolesPageComponent implements OnInit {
   roles: Role[] = [];
   filteredRoles: Role[] = [];
 
-  // --- FAUX JEU DE DONNÉES (MOCK) ---
-  // On utilise Camp.VALEUR pour correspondre au type attendu par l'interface Role
+  // --- NOUVELLE VARIABLE POUR LA MODALE ---
+  selectedRole: Role | null = null; 
+
   private mockRoles: Role[] = [
     { 
       id: 1, 
@@ -80,11 +80,14 @@ export class RolesPageComponent implements OnInit {
   ];
 
   ngOnInit(): void {
+    // Une fois ton CORS réglé, tu pourras décommenter l'appel au service :
+    // this.rolesService.getAllRoles().subscribe((roles) => {
+    //   this.roles = roles;
+    //   this.filterRoles();
+    // });
+
     this.roles = this.mockRoles;
-    
     this.filterRoles();
-    
-    console.log('Données de test chargées :', this.roles);
   }
 
   setTab(tab: 'villageois' | 'sorcieres' | 'independants') {
@@ -93,7 +96,6 @@ export class RolesPageComponent implements OnInit {
   }
 
   filterRoles() {
-    // On fait correspondre les clés de l'onglet avec les valeurs de l'Enum
     const map: Record<string, Camp> = {
       villageois: Camp.VILLAGEOIS,
       sorcieres: Camp.SORCIERES,
@@ -101,12 +103,17 @@ export class RolesPageComponent implements OnInit {
     };
 
     const targetCamp = map[this.activeTab];
+    this.filteredRoles = this.roles.filter((role) => role.camp === targetCamp);
+  }
 
-    this.filteredRoles = this.roles.filter((role) => {
-      // On compare directement les valeurs de l'Enum
-      return role.camp === targetCamp;
-    });
+  // --- MÉTHODES DE LA MODALE ---
+  openModal(role: Role) {
+    this.selectedRole = role;
+    document.body.style.overflow = 'hidden'; // Bloque le scroll
+  }
 
-    console.log(`Filtrage terminé pour [${this.activeTab}] :`, this.filteredRoles.length, 'rôles trouvés.');
+  closeModal() {
+    this.selectedRole = null;
+    document.body.style.overflow = 'auto'; // Libère le scroll
   }
 }

@@ -1,9 +1,6 @@
-<!-- <app-wip></app-wip> -->
-
 <section class="bg-[#141025] min-h-screen pt-24" id="bgImage">
   <div class="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-3 px-6 mt-20">
     
-    <!-- LEFT -->
     <div class="md:col-span-1 flex flex-col gap-6">
       <h1 class="font-test text-4xl md:text-5xl font-extrabold text-gray-100">
         Les rôles
@@ -13,12 +10,10 @@
         Découvrez la liste de personnages à incarner
       </p>
 
-      <!-- TABS -->
       <div class="mt-16 flex gap-8 border-b border-gray-700">
-        
         <button
           (click)="setTab('villageois')"
-          class="pb-4 font-medium transition-colors"
+          class="pb-4 font-medium transition-all duration-300"
           [class.text-white]="activeTab === 'villageois'"
           [class.text-gray-400]="activeTab !== 'villageois'"
           [class.border-b-2]="activeTab === 'villageois'"
@@ -29,7 +24,7 @@
 
         <button
           (click)="setTab('sorcieres')"
-          class="pb-4 font-medium transition-colors"
+          class="pb-4 font-medium transition-all duration-300"
           [class.text-white]="activeTab === 'sorcieres'"
           [class.text-gray-400]="activeTab !== 'sorcieres'"
           [class.border-b-2]="activeTab === 'sorcieres'"
@@ -40,7 +35,7 @@
 
         <button
           (click)="setTab('independants')"
-          class="pb-4 font-medium transition-colors"
+          class="pb-4 font-medium transition-all duration-300"
           [class.text-white]="activeTab === 'independants'"
           [class.text-gray-400]="activeTab !== 'independants'"
           [class.border-b-2]="activeTab === 'independants'"
@@ -48,45 +43,99 @@
         >
           Indépendants
         </button>
-
       </div>
     </div>
   </div>
 
-  <!-- CARDS -->
-  <div class="max-w-screen-xl mx-auto px-6 mt-20">
+  <div class="max-w-screen-xl mx-auto px-6 mt-20 pb-20">
     <div class="animate-fade">
-
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 place-items-center max-w-4xl mx-auto">
         
         @for (role of filteredRoles; track role.id) {
           <div
-            class="border border-green-600/30 rounded-lg p-6 w-full max-w-xs flex flex-col bg-gray-900 hover:scale-105 transition-transform duration-300"
+            (click)="openModal(role)"
+            class="group border border-green-600/30 rounded-lg p-6 w-full max-w-xs flex flex-col bg-gray-900 hover:scale-105 hover:border-green-500/60 transition-all duration-300 cursor-pointer shadow-lg"
           >
-            <div class="w-10 h-10 bg-gray-600 mb-4 rounded"></div>
+            <div class="w-10 h-10 bg-gray-700 mb-4 rounded group-hover:bg-gray-600 transition-colors"></div>
 
-            <h4 class="text-white font-semibold">
+            <h4 class="text-white font-semibold text-lg">
               {{ role.name }}
             </h4>
 
-            <p class="text-gray-400 text-sm mt-2">
-              {{ role.description }}
+            <p class="text-gray-400 text-sm mt-2 line-clamp-3 italic">
+              "{{ role.description }}"
             </p>
 
-            <p class="text-xs text-gray-500 mt-4">
-              Minimum joueurs : {{ role.minPlayer }}
-            </p>
+            <div class="mt-4 flex items-center justify-between">
+              <p class="text-xs text-gray-500">
+                Min. joueurs : <span class="text-gray-300">{{ role.minPlayer }}</span>
+              </p>
+              <span class="text-[10px] text-green-500 opacity-0 group-hover:opacity-100 transition-opacity">
+                Voir détails →
+              </span>
+            </div>
           </div>
         }
 
       </div>
 
       @if (filteredRoles.length === 0) {
-        <div class="text-center text-gray-400 mt-10">
+        <div class="text-center text-gray-400 mt-10 py-10 border-2 border-dashed border-gray-800 rounded-xl">
           Aucun rôle disponible pour cette catégorie.
         </div>
       }
-
     </div>
   </div>
 </section>
+
+@if (selectedRole) {
+  <div 
+    class="fixed inset-0 bg-black/80 backdrop-blur-md z-[100] flex items-center justify-center p-4 animate-fade"
+    (click)="closeModal()"
+  >
+    <div 
+      class="bg-gray-900 border border-white/10 rounded-2xl p-8 max-w-lg w-full shadow-2xl relative animate-popIn"
+      (click)="$event.stopPropagation()"
+    >
+      <button 
+        (click)="closeModal()" 
+        class="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors p-2"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
+      <div class="flex flex-col items-center text-center">
+        <div class="w-24 h-24 bg-gradient-to-br from-gray-700 to-gray-800 mb-6 rounded-full border-2 border-green-500/30 flex items-center justify-center shadow-inner">
+           <div class="w-12 h-12 bg-gray-600 rounded"></div>
+        </div>
+
+        <h2 class="font-test text-4xl font-extrabold text-white mb-2 uppercase tracking-tight">
+          {{ selectedRole.name }}
+        </h2>
+
+        <span class="px-4 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase bg-green-950 text-green-400 border border-green-500/20 mb-6">
+          Camp : {{ selectedRole.camp }}
+        </span>
+
+        <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent mb-6"></div>
+
+        <p class="text-gray-300 text-lg leading-relaxed font-test2 px-4">
+          {{ selectedRole.description }}
+        </p>
+
+        <div class="mt-8 grid grid-cols-2 gap-4 w-full">
+            <div class="bg-black/20 p-3 rounded-lg border border-white/5">
+                <p class="text-[10px] uppercase text-gray-500">Joueurs requis</p>
+                <p class="text-white font-bold">{{ selectedRole.minPlayer }}+</p>
+            </div>
+            <div class="bg-black/20 p-3 rounded-lg border border-white/5">
+                <p class="text-[10px] uppercase text-gray-500">ID Unique</p>
+                <p class="text-white font-bold">#{{ selectedRole.id }}</p>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}
