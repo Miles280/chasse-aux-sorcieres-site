@@ -1,17 +1,16 @@
-import { Camp } from './camp.model';
-import { Power } from './power.model';
-import { Alignment } from './alignment.model';
+// On définit l'Enum qui correspond exactement à ton PHP
+export enum Camp {
+  VILLAGEOIS = 'VILLAGEOIS',
+  SORCIERES = 'SORCIERES',
+  INDEPENDANTS = 'INDEPENDANTS'
+}
 
 export interface Role {
   id: number;
   name: string;
   description: string;
   minPlayer: number;
-  camp: Camp;
-  goal?: {
-    id: number;
-    name: string;
-  } | null;
-  powers: Power[];
-  alignment: Alignment[];
+  camp: Camp; 
+  powers?: any[];
+  alignment?: string[];
 }

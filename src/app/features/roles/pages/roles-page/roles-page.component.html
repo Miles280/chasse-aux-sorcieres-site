@@ -1,10 +1,9 @@
-<app-wip></app-wip>
+<!-- <app-wip></app-wip> -->
 
-<!-- <section class="bg-[#141025] min-h-screen pt-24" id="bgImage ">
-  <div
-    class="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-3 px-6 mt-20"
-  >
+<section class="bg-[#141025] min-h-screen pt-24" id="bgImage">
+  <div class="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-3 px-6 mt-20">
     
+    <!-- LEFT -->
     <div class="md:col-span-1 flex flex-col gap-6">
       <h1 class="font-test text-4xl md:text-5xl font-extrabold text-gray-100">
         Les rôles
@@ -14,8 +13,9 @@
         Découvrez la liste de personnages à incarner
       </p>
 
-      
+      <!-- TABS -->
       <div class="mt-16 flex gap-8 border-b border-gray-700">
+        
         <button
           (click)="setTab('villageois')"
           class="pb-4 font-medium transition-colors"
@@ -48,21 +48,22 @@
         >
           Indépendants
         </button>
+
       </div>
     </div>
   </div>
 
-  
+  <!-- CARDS -->
   <div class="max-w-screen-xl mx-auto px-6 mt-20">
     <div class="animate-fade">
-      <div
-        class="grid grid-cols-1 md:grid-cols-3 gap-8 place-items-center max-w-4xl mx-auto"
-      >
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 place-items-center max-w-4xl mx-auto">
+        
         @for (role of filteredRoles; track role.id) {
           <div
-            class="border border-green-600/30 rounded-lg p-6 w-full max-w-xs flex flex-col bg-gray-900"
+            class="border border-green-600/30 rounded-lg p-6 w-full max-w-xs flex flex-col bg-gray-900 hover:scale-105 transition-transform duration-300"
           >
-            <div class="w-10 h-10 bg-gray-600 mb-4"></div>
+            <div class="w-10 h-10 bg-gray-600 mb-4 rounded"></div>
 
             <h4 class="text-white font-semibold">
               {{ role.name }}
@@ -77,6 +78,7 @@
             </p>
           </div>
         }
+
       </div>
 
       @if (filteredRoles.length === 0) {
@@ -84,6 +86,7 @@
           Aucun rôle disponible pour cette catégorie.
         </div>
       }
+
     </div>
   </div>
-</section> -->
+</section>
