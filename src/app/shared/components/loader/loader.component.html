@@ -1,21 +1,12 @@
 @if (loading$ | async) {
-
   <div class="loader-wrapper">
-
     <div class="loader">
       <figure class="iconLoaderProgress">
-
-        <svg class="iconLoaderProgressFirst" width="240" height="240">
-          <circle cx="120" cy="120" r="100"></circle>
+        <svg width="240" height="240" viewBox="0 0 240 240">
+          <circle class="circle-bg" cx="120" cy="120" r="100"></circle>
+          <circle class="circle-active" cx="120" cy="120" r="100"></circle>
         </svg>
-
-        <svg class="iconLoaderProgressSecond" width="240" height="240">
-          <circle cx="120" cy="120" r="100"></circle>
-        </svg>
-
       </figure>
     </div>
-
   </div>
-
 }
