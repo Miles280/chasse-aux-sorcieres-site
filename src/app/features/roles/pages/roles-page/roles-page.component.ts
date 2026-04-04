@@ -20,62 +20,64 @@ export class RolesPageComponent implements OnInit {
   filteredRoles: Role[] = [];
 
   // --- NOUVELLE VARIABLE POUR LA MODALE ---
-  selectedRole: Role | null = null; 
+  selectedRole: Role | null = null;
 
   private mockRoles: Role[] = [
-    { 
-      id: 1, 
-      name: 'Simple Villageois', 
-      description: 'N\'a aucun pouvoir particulier, mais une grande force de conviction.', 
-      minPlayer: 6, 
+    {
+      id: 1,
+      name: 'Simple Villageois',
+      description:
+        "N'a aucun pouvoir particulier, mais une grande force de conviction.",
+      minPlayer: 6,
       camp: Camp.VILLAGEOIS,
       powers: [],
-      alignment: []
+      alignment: [],
     },
-    { 
-      id: 2, 
-      name: 'Voyante', 
-      description: 'Peut découvrir le rôle d\'un joueur chaque nuit.', 
-      minPlayer: 6, 
+    {
+      id: 2,
+      name: 'Voyante',
+      description: "Peut découvrir le rôle d'un joueur chaque nuit.",
+      minPlayer: 6,
       camp: Camp.VILLAGEOIS,
       powers: [],
-      alignment: []
+      alignment: [],
     },
-    { 
-      id: 3, 
-      name: 'Sorcière Rouge', 
-      description: 'Possède deux potions : une pour donner la vie, l\'autre la mort.', 
-      minPlayer: 8, 
+    {
+      id: 3,
+      name: 'Sorcière Rouge',
+      description:
+        "Possède deux potions : une pour donner la vie, l'autre la mort.",
+      minPlayer: 8,
       camp: Camp.SORCIERES,
       powers: [],
-      alignment: []
+      alignment: [],
     },
-    { 
-      id: 4, 
-      name: 'Liche', 
-      description: 'Cherche à corrompre les vivants pour son propre compte.', 
-      minPlayer: 10, 
+    {
+      id: 4,
+      name: 'Liche',
+      description: 'Cherche à corrompre les vivants pour son propre compte.',
+      minPlayer: 10,
       camp: Camp.INDEPENDANTS,
       powers: [],
-      alignment: []
+      alignment: [],
     },
-    { 
-      id: 5, 
-      name: 'Chasseur', 
-      description: 'S\'il meurt, il emporte quelqu\'un avec lui dans la tombe.', 
-      minPlayer: 6, 
+    {
+      id: 5,
+      name: 'Chasseur',
+      description: "S'il meurt, il emporte quelqu'un avec lui dans la tombe.",
+      minPlayer: 6,
       camp: Camp.VILLAGEOIS,
       powers: [],
-      alignment: []
+      alignment: [],
     },
-    { 
-      id: 6, 
-      name: 'Apprentie Sorcière', 
-      description: 'Apprend les secrets des potions auprès de ses pairs.', 
-      minPlayer: 8, 
+    {
+      id: 6,
+      name: 'Apprentie Sorcière',
+      description: 'Apprend les secrets des potions auprès de ses pairs.',
+      minPlayer: 8,
       camp: Camp.SORCIERES,
       powers: [],
-      alignment: []
+      alignment: [],
     },
   ];
 
@@ -84,6 +86,7 @@ export class RolesPageComponent implements OnInit {
     // this.rolesService.getAllRoles().subscribe((roles) => {
     //   this.roles = roles;
     //   this.filterRoles();
+    //   console.log(this.roles);
     // });
 
     this.roles = this.mockRoles;
