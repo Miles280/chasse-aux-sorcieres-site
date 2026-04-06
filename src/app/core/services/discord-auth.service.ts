@@ -139,11 +139,7 @@ export class DiscordAuthService {
   }
 
   checkAuthStatus(): void {
-    const token = this.getToken();
-
-    // Si on n'a pas de token, on tente quand même un refresh "silencieux"
-    // car on a peut-être un cookie HttpOnly valide
-    if (!token) {
+    if (!this.isLoggedIn()) {
       this.refreshToken().subscribe({
         next: () => console.log('Reconnexion automatique réussie'),
         error: () => {

@@ -8,17 +8,23 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import {
+  CdkDragDrop,
+  DragDropModule,
+  moveItemInArray,
+} from '@angular/cdk/drag-drop';
 import { Role } from 'src/app/core/models/role.model';
 import { RolesService } from 'src/app/core/services/roles.service';
 import { Camp } from 'src/app/core/enums/camp.enum';
 import { Alignment } from 'src/app/core/enums/alignment.enum';
+import { Power } from 'src/app/core/models/power.model';
 
 type ViewMode = 'list' | 'form';
 
 @Component({
   selector: 'app-roles-management',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, DragDropModule],
   templateUrl: './roles-management-page.component.html',
   styleUrl: './roles-management-page.component.css',
 })
@@ -108,7 +114,8 @@ export class RolesManagementPageComponent implements OnInit {
     // Gérer les alignements
     this.setAlignments(role.alignments);
 
-    // TODO: Gérer les powers
+    // Gérer les pouvoirs
+    this.setPowers(role.powers);
   }
 
   /** Définit les alignements dans le formulaire */
@@ -120,6 +127,15 @@ export class RolesManagementPageComponent implements OnInit {
     });
   }
 
+  /** Définit les pouvoirs dans le formulaire */
+  private setPowers(powers: Power[]): void {
+    const powersFormArray = this.roleForm.get('powers') as FormArray;
+    powersFormArray.clear();
+    powers.forEach((power, index) => {
+      powersFormArray.push(this.createPowerFormGroup(power, index));
+    });
+  }
+
   /** Soumet le formulaire */
   onSubmit(): void {
     if (this.roleForm.invalid) {
@@ -128,6 +144,13 @@ export class RolesManagementPageComponent implements OnInit {
     }
 
     const formValue = this.roleForm.value;
+
+    // Mettre à jour les positions des pouvoirs
+    const powersArray = this.roleForm.get('powers') as FormArray;
+    formValue.powers = powersArray.value.map((power: any, index: number) => ({
+      ...power,
+      position: index,
+    }));
 
     if (this.isEditMode && this.editingRoleId) {
       // Mise à jour
@@ -197,6 +220,70 @@ export class RolesManagementPageComponent implements OnInit {
     return alignmentsArray.value.includes(alignment);
   }
 
+  // ========== GESTION DES POUVOIRS ==========
+
+  /** Getter pour le FormArray des pouvoirs */
+  get powersFormArray(): FormArray {
+    return this.roleForm.get('powers') as FormArray;
+  }
+
+  /** Crée un FormGroup pour un pouvoir */
+  private createPowerFormGroup(power?: Power, position: number = 0): FormGroup {
+    return this.fb.group({
+      id: [power?.id || null],
+      title: [
+        power?.title || '',
+        [Validators.required, Validators.minLength(3)],
+      ],
+      description: [
+        power?.description || '',
+        [Validators.required, Validators.minLength(5)],
+      ],
+      isDayPower: [power?.isDayPower || false],
+      isPassive: [power?.isPassive || false],
+      leavingHouse: [power?.leavingHouse || false],
+      usageLimit: [power?.usageLimit || null, [Validators.min(0)]],
+      position: [power?.position ?? position],
+    });
+  }
+
+  /** Ajoute un nouveau pouvoir */
+  addPower(): void {
+    const position = this.powersFormArray.length;
+    this.powersFormArray.push(this.createPowerFormGroup(undefined, position));
+  }
+
+  /** Supprime un pouvoir */
+  removePower(index: number): void {
+    if (confirm('Supprimer ce pouvoir ?')) {
+      this.powersFormArray.removeAt(index);
+      this.updatePowerPositions();
+    }
+  }
+
+  /** Gère le drag & drop des pouvoirs */
+  dropPower(event: CdkDragDrop<FormGroup[]>): void {
+    if (event.previousIndex === event.currentIndex) return;
+
+    const powersArray = this.powersFormArray;
+
+    // On récupère le contrôle à déplacer
+    const controlToMove = powersArray.at(event.previousIndex);
+
+    // On le retire de l'ancienne position et on l'insère à la nouvelle
+    powersArray.removeAt(event.previousIndex);
+    powersArray.insert(event.currentIndex, controlToMove);
+
+    this.updatePowerPositions();
+  }
+
+  /** Met à jour les positions après réorganisation */
+  private updatePowerPositions(): void {
+    this.powersFormArray.controls.forEach((control, index) => {
+      control.patchValue({ position: index });
+    });
+  }
+
   /** Retourne à l'admin dashboard */
   goBack(): void {
     this.router.navigate(['/admin']);
@@ -234,5 +321,9 @@ export class RolesManagementPageComponent implements OnInit {
       [Alignment.PROTECTOR]: 'info',
     };
     return colors[alignment];
+  }
+
+  asFormGroup(control: any): FormGroup {
+    return control as FormGroup;
   }
 }
