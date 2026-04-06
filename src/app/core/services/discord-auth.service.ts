@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
-// On supprime CookieService, on n'en a plus besoin !
 
 @Injectable({
   providedIn: 'root',
@@ -13,8 +12,6 @@ export class DiscordAuthService {
   private http = inject(HttpClient);
   private env = environment;
 
-  // On garde le token en localStorage pour le moment (Access Token court terme)
-  // pour éviter que tu sois déconnecté si tu rafraîchis la page (F5).
   private loggedIn = new BehaviorSubject<boolean>(!!this.getToken());
   public isLoggedIn$ = this.loggedIn.asObservable();
 
@@ -30,7 +27,7 @@ export class DiscordAuthService {
   exchangeCode(payload: { code: string }): Observable<any> {
     return this.http
       .post(`${this.env.apiUrl}/auth/login`, payload, {
-        withCredentials: true, // IMPORTANT : Pour accepter le cookie du serveur
+        withCredentials: true,
       })
       .pipe(
         tap((response: any) => {
@@ -106,7 +103,7 @@ export class DiscordAuthService {
     }
   }
 
-  // --- Méthodes utilitaires inchangées ou simplifiées ---
+  // --- Méthodes utilitaires ---
 
   private decodeToken(token: string): any {
     try {
@@ -145,7 +142,7 @@ export class DiscordAuthService {
     const token = this.getToken();
 
     // Si on n'a pas de token, on tente quand même un refresh "silencieux"
-    // car on a peut-être un cookie HttpOnly valide !
+    // car on a peut-être un cookie HttpOnly valide
     if (!token) {
       this.refreshToken().subscribe({
         next: () => console.log('Reconnexion automatique réussie'),

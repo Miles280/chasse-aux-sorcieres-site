@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { AdminDashboardPageComponent } from './pages/admin-dashboard/admin-dashboard.component';
+import { AdminDashboardPageComponent } from './pages/admin-dashboard/admin-dashboard-page.component';
 import { adminGuard } from 'src/app/core/guards/admin.guard';
 import { authGuard } from 'src/app/core/guards/auth.guard';
 
@@ -12,7 +12,7 @@ export const ADMIN_ROUTES: Routes = [
   {
     path: 'roles',
     loadComponent: () =>
-      import('./pages/roles-management/roles-management.component').then(
+      import('./pages/roles-management/roles-management-page.component').then(
         (m) => m.RolesManagementPageComponent,
       ),
     canActivate: [authGuard, adminGuard],

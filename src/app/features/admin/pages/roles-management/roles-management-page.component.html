@@ -1,0 +1,374 @@
+<div
+  class="min-h-screen bg-gradient-to-b from-[#0a0a0c] via-[#1a0b2e] to-[#0a0a0c] py-20"
+>
+  <div class="max-w-screen-xl mx-auto px-6">
+    <!-- Header -->
+    <div class="mb-12">
+      <button
+        (click)="goBack()"
+        class="group inline-flex items-center gap-2 text-violet-300 hover:text-white transition-colors mb-6"
+      >
+        <svg
+          class="w-5 h-5 transition-transform group-hover:-translate-x-1"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 19l-7-7 7-7"
+          />
+        </svg>
+        Retour
+      </button>
+
+      <div class="text-center">
+        <h1
+          class="font-test font-extrabold text-4xl md:text-5xl mb-4 animate-text-glow bg-gradient-to-r from-violet-600 via-fuchsia-400 to-violet-600"
+        >
+          Gestion des rôles
+        </h1>
+        <p class="text-violet-100/70 text-lg max-w-2xl mx-auto">
+          Créez, modifiez et supprimez les rôles du jeu
+        </p>
+        <div
+          class="h-px w-24 mx-auto bg-gradient-to-r from-transparent via-violet-500/60 to-transparent mt-6"
+        ></div>
+      </div>
+    </div>
+
+    <!-- View Toggle -->
+    <div class="flex justify-center gap-4 mb-12">
+      <button
+        (click)="switchView('list')"
+        [class.active]="viewMode === 'list'"
+        class="px-8 py-3 rounded-xl font-medium transition-all duration-300"
+        [ngClass]="
+          viewMode === 'list'
+            ? 'bg-gradient-to-r from-violet-600 via-fuchsia-500 to-violet-600 text-white shadow-[0_0_20px_rgba(109,40,217,0.4)]'
+            : 'bg-violet-900/20 border border-violet-500/30 text-violet-300 hover:border-violet-500/50 hover:text-white'
+        "
+      >
+        Liste des rôles
+      </button>
+      <button
+        (click)="showCreateForm()"
+        [class.active]="viewMode === 'form'"
+        class="px-8 py-3 rounded-xl font-medium transition-all duration-300"
+        [ngClass]="
+          viewMode === 'form'
+            ? 'bg-gradient-to-r from-violet-600 via-fuchsia-500 to-violet-600 text-white shadow-[0_0_20px_rgba(109,40,217,0.4)]'
+            : 'bg-violet-900/20 border border-violet-500/30 text-violet-300 hover:border-violet-500/50 hover:text-white'
+        "
+      >
+        Créer un rôle
+      </button>
+    </div>
+
+    <!-- LIST VIEW -->
+    <div *ngIf="viewMode === 'list'">
+      <!-- Loading State -->
+      <div *ngIf="isLoading" class="text-center py-20">
+        <div
+          class="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-violet-500"
+        ></div>
+        <p class="text-violet-300 mt-4">Chargement des rôles...</p>
+      </div>
+
+      <!-- Empty State -->
+      <div *ngIf="!isLoading && roles.length === 0" class="text-center py-20">
+        <div class="max-w-md mx-auto">
+          <div
+            class="w-20 h-20 bg-violet-900/30 rounded-full flex items-center justify-center mx-auto mb-6"
+          >
+            <svg
+              class="w-10 h-10 text-violet-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+              />
+            </svg>
+          </div>
+          <p class="text-gray-400 mb-6">Aucun rôle trouvé</p>
+          <button
+            (click)="showCreateForm()"
+            class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-violet-600 via-fuchsia-500 to-violet-600 text-white font-medium hover:shadow-[0_0_30px_rgba(109,40,217,0.4)] transition-all duration-300"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 4v16m8-8H4"
+              />
+            </svg>
+            Créer le premier rôle
+          </button>
+        </div>
+      </div>
+
+      <!-- Roles List -->
+      <div *ngIf="!isLoading && roles.length > 0" class="grid gap-6">
+        <div
+          *ngFor="let role of roles"
+          class="group relative overflow-hidden p-6 rounded-2xl bg-[#1c1a26] border border-white/10 hover:border-violet-500/50 transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
+        >
+          <!-- Glow Effect -->
+          <div
+            class="absolute -top-20 -right-20 w-64 h-64 bg-violet-800/10 blur-[100px] rounded-full pointer-events-none group-hover:bg-violet-600/20 transition-colors duration-500"
+          ></div>
+
+          <div class="relative z-10">
+            <!-- Header -->
+            <div
+              class="flex flex-col md:flex-row md:justify-between md:items-start gap-4 mb-4"
+            >
+              <div class="flex-1">
+                <h3 class="text-xl font-bold text-white mb-2">
+                  {{ role.name }}
+                </h3>
+                <p class="text-sm text-gray-400">
+                  Camp:
+                  <span class="text-violet-300">{{
+                    getCampLabel(role.camp)
+                  }}</span>
+                  • Min:
+                  <span class="text-violet-300"
+                    >{{ role.minPlayer }} joueurs</span
+                  >
+                </p>
+              </div>
+              <div class="flex gap-2">
+                <button
+                  (click)="editRole(role)"
+                  class="px-4 py-2 rounded-lg bg-violet-900/30 border border-violet-500/30 text-violet-300 hover:bg-violet-900/50 hover:border-violet-500 hover:text-white transition-all duration-300 text-sm font-medium"
+                >
+                  Modifier
+                </button>
+                <button
+                  (click)="deleteRole(role)"
+                  class="px-4 py-2 rounded-lg bg-red-900/30 border border-red-500/30 text-red-300 hover:bg-red-900/50 hover:border-red-500 hover:text-white transition-all duration-300 text-sm font-medium"
+                >
+                  Supprimer
+                </button>
+              </div>
+            </div>
+
+            <!-- Description -->
+            <p class="text-gray-300 leading-relaxed mb-4">
+              {{ role.description }}
+            </p>
+
+            <!-- Alignments -->
+            <div
+              *ngIf="role.alignments.length > 0"
+              class="flex flex-wrap gap-2 mb-3"
+            >
+              <span
+                *ngFor="let alignment of role.alignments"
+                class="px-3 py-1 rounded-full text-xs font-medium"
+                [ngClass]="{
+                  'bg-blue-900/40 text-blue-300 border border-blue-500/30':
+                    getAlignmentColor(alignment) === 'info',
+                  'bg-amber-900/40 text-amber-300 border border-amber-500/30':
+                    getAlignmentColor(alignment) === 'warning',
+                  'bg-red-900/40 text-red-300 border border-red-500/30':
+                    getAlignmentColor(alignment) === 'danger',
+                }"
+              >
+                {{ getAlignmentLabel(alignment) }}
+              </span>
+            </div>
+
+            <!-- Powers Count -->
+            <div
+              *ngIf="role.powers.length > 0"
+              class="text-sm text-violet-400 italic"
+            >
+              {{ role.powers.length }} pouvoir(s)
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORM VIEW -->
+    <div *ngIf="viewMode === 'form'">
+      <form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
+        <div class="max-w-4xl mx-auto">
+          <div
+            class="relative overflow-hidden p-8 rounded-2xl bg-[#1c1a26] border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
+          >
+            <!-- Glow Effect -->
+            <div
+              class="absolute -top-20 -left-20 w-96 h-96 bg-violet-800/10 blur-[120px] rounded-full pointer-events-none"
+            ></div>
+
+            <div class="relative z-10">
+              <!-- Form Title -->
+              <h2 class="text-2xl font-bold text-white mb-8">
+                {{ isEditMode ? "Modifier le rôle" : "Nouveau rôle" }}
+              </h2>
+
+              <!-- Informations générales -->
+              <div class="mb-8 pb-8 border-b border-white/10">
+                <h3 class="text-lg font-semibold text-violet-300 mb-6">
+                  Informations générales
+                </h3>
+
+                <!-- Nom -->
+                <div class="mb-6">
+                  <label class="block text-sm font-medium text-gray-300 mb-2">
+                    Nom du rôle <span class="text-red-400">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    formControlName="name"
+                    placeholder="Ex: Voyante, Loup-garou..."
+                    class="w-full px-4 py-3 rounded-lg bg-[#0a0a0c] border border-violet-500/30 text-white placeholder-gray-500 focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/20 transition-all"
+                  />
+                  <div
+                    *ngIf="
+                      roleForm.get('name')?.invalid &&
+                      roleForm.get('name')?.touched
+                    "
+                    class="text-red-400 text-sm mt-1"
+                  >
+                    Le nom doit contenir au moins 3 caractères
+                  </div>
+                </div>
+
+                <!-- Description -->
+                <div class="mb-6">
+                  <label class="block text-sm font-medium text-gray-300 mb-2">
+                    Description <span class="text-red-400">*</span>
+                  </label>
+                  <textarea
+                    formControlName="description"
+                    rows="4"
+                    placeholder="Décrivez le rôle et son background..."
+                    class="w-full px-4 py-3 rounded-lg bg-[#0a0a0c] border border-violet-500/30 text-white placeholder-gray-500 focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/20 transition-all resize-vertical"
+                  ></textarea>
+                  <div
+                    *ngIf="
+                      roleForm.get('description')?.invalid &&
+                      roleForm.get('description')?.touched
+                    "
+                    class="text-red-400 text-sm mt-1"
+                  >
+                    La description doit contenir au moins 10 caractères
+                  </div>
+                </div>
+
+                <!-- Camp & Min Player -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">
+                      Camp <span class="text-red-400">*</span>
+                    </label>
+                    <select
+                      formControlName="camp"
+                      class="w-full px-4 py-3 rounded-lg bg-[#0a0a0c] border border-violet-500/30 text-white focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/20 transition-all"
+                    >
+                      <option *ngFor="let camp of camps" [value]="camp">
+                        {{ getCampLabel(camp) }}
+                      </option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">
+                      Nombre minimum de joueurs
+                      <span class="text-red-400">*</span>
+                    </label>
+                    <input
+                      type="number"
+                      formControlName="minPlayer"
+                      min="1"
+                      class="w-full px-4 py-3 rounded-lg bg-[#0a0a0c] border border-violet-500/30 text-white focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/20 transition-all"
+                    />
+                  </div>
+                </div>
+
+                <!-- Alignements -->
+                <div class="mt-6">
+                  <label class="block text-sm font-medium text-gray-300 mb-3"
+                    >Alignements</label
+                  >
+                  <div class="flex flex-wrap gap-3">
+                    <label
+                      *ngFor="let alignment of alignments"
+                      class="relative cursor-pointer"
+                    >
+                      <input
+                        type="checkbox"
+                        [checked]="isAlignmentSelected(alignment)"
+                        (change)="toggleAlignment(alignment)"
+                        class="peer sr-only"
+                      />
+                      <div
+                        class="px-5 py-2.5 rounded-lg border transition-all duration-300 peer-checked:bg-violet-900/50 peer-checked:border-violet-500 peer-checked:text-white border-violet-500/30 text-gray-400 hover:border-violet-500/50 hover:text-gray-300"
+                      >
+                        {{ getAlignmentLabel(alignment) }}
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pouvoirs Section -->
+              <div class="mb-8">
+                <div class="flex justify-between items-center mb-4">
+                  <h3 class="text-lg font-semibold text-violet-300">
+                    Pouvoirs
+                  </h3>
+                  <p class="text-sm text-gray-500 italic">
+                    La gestion des pouvoirs sera ajoutée prochainement
+                  </p>
+                </div>
+              </div>
+
+              <!-- Actions -->
+              <div
+                class="flex flex-col sm:flex-row justify-end gap-4 pt-6 border-t border-white/10"
+              >
+                <button
+                  type="button"
+                  (click)="switchView('list')"
+                  class="px-6 py-3 rounded-lg bg-violet-900/20 border border-violet-500/30 text-violet-300 hover:bg-violet-900/30 hover:border-violet-500/50 hover:text-white transition-all duration-300 font-medium"
+                >
+                  Annuler
+                </button>
+                <button
+                  type="submit"
+                  [disabled]="roleForm.invalid"
+                  class="px-8 py-3 rounded-lg font-medium transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                  [ngClass]="
+                    roleForm.invalid
+                      ? 'bg-gray-700 text-gray-400 border border-gray-600'
+                      : 'bg-gradient-to-r from-violet-600 via-fuchsia-500 to-violet-600 text-white hover:shadow-[0_0_30px_rgba(109,40,217,0.4)]'
+                  "
+                >
+                  {{ isEditMode ? "Mettre à jour" : "Créer le rôle" }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

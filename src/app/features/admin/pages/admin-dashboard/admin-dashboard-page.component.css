@@ -1,0 +1,123 @@
+.admin-dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+/* Header */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 0.5px solid var(--color-border-tertiary);
+}
+
+.header-content h1 {
+  margin: 0 0 0.5rem 0;
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 16px;
+  color: var(--color-text-secondary);
+}
+
+.logout-btn {
+  padding: 10px 20px;
+  background: transparent;
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--border-radius-md);
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.logout-btn:hover {
+  background: var(--color-background-secondary);
+  border-color: var(--color-border-primary);
+}
+
+/* Cards Grid */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+/* Card Styles */
+.admin-card {
+  background: var(--color-background-primary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-lg);
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  gap: 1rem;
+}
+
+.admin-card:hover {
+  border-color: var(--color-border-secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.card-icon {
+  font-size: 32px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--border-radius-md);
+  flex-shrink: 0;
+}
+
+.card-primary .card-icon {
+  background: var(--color-background-info);
+}
+
+.card-info .card-icon {
+  background: var(--color-background-warning);
+}
+
+.card-success .card-icon {
+  background: var(--color-background-success);
+}
+
+.card-content {
+  flex: 1;
+}
+
+.card-title {
+  margin: 0 0 0.5rem 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.card-description {
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
