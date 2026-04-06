@@ -12,7 +12,7 @@ export class DiscordAuthService {
   private http = inject(HttpClient);
   private env = environment;
 
-  private loggedIn = new BehaviorSubject<boolean>(!!this.getToken());
+  private loggedIn = new BehaviorSubject<boolean>(this.isLoggedIn());
   public isLoggedIn$ = this.loggedIn.asObservable();
 
   private roleSubject = new BehaviorSubject<string[]>(
