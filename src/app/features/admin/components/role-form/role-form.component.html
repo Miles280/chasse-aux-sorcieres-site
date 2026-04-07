@@ -89,10 +89,30 @@
             </div>
           </div>
 
+          <!-- Goal (conditionnel - seulement pour Indépendants) -->
+          @if (showGoalField) {
+            <div class="mt-6 goal-field-appear">
+              <label class="block text-sm font-medium text-gray-300 mb-2">
+                Condition de victoire
+                <span class="text-violet-400 text-xs ml-2">
+                  Pour les indépendants
+                </span>
+              </label>
+
+              <textarea
+                formControlName="goal"
+                rows="3"
+                placeholder="Ex : Gagner si vous êtes le dernier joueur en vie..."
+                class="w-full px-4 py-3 rounded-lg bg-[#0a0a0c] border border-violet-500/30 text-white placeholder-gray-500 focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/20 transition-all resize-vertical"
+              ></textarea>
+            </div>
+          }
+
           <!-- Alignements -->
           <div class="mt-6">
             <label class="block text-sm font-medium text-gray-300 mb-3">
               Alignements
+              <span class="text-gray-500 text-xs ml-2">(Maximum 2)</span>
             </label>
             <div class="flex flex-wrap gap-3">
               @for (alignment of alignments; track alignment) {
@@ -121,6 +141,26 @@
 
         <!-- Pouvoirs Section (délégué au power-form) -->
         <app-power-form [powersFormArray]="powersFormArray" />
+
+        <!-- Notes (optionnel) -->
+        <div class="mb-8 pb-8 border-b border-white/10">
+          <h3 class="text-lg font-semibold text-violet-300 mb-3">
+            Notes
+            <span class="text-gray-500 text-sm font-normal ml-2"
+              >(Optionnel)</span
+            >
+          </h3>
+          <p class="text-gray-400 text-sm mb-4">
+            Ajoutez des précisions, des conseils de jeu ou des informations
+            supplémentaires sur ce rôle.
+          </p>
+          <textarea
+            formControlName="notes"
+            rows="3"
+            placeholder="Ex : Ce rôle est particulièrement fort en début de partie..."
+            class="w-full px-4 py-3 rounded-lg bg-[#0a0a0c] border border-violet-500/30 text-white placeholder-gray-500 focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/20 transition-all resize-vertical"
+          ></textarea>
+        </div>
 
         <!-- Actions -->
         <div

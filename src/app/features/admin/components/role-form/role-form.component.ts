@@ -6,6 +6,7 @@ import {
   OnInit,
   OnChanges,
   SimpleChanges,
+  OnDestroy,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -15,6 +16,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
 import { Role } from 'src/app/core/models/role.model';
 import { Camp } from 'src/app/core/enums/camp.enum';
 import { Alignment } from 'src/app/core/enums/alignment.enum';
@@ -27,7 +29,7 @@ import { PowerFormComponent } from '../power-form/power-form.component';
   templateUrl: './role-form.component.html',
   styleUrl: './role-form.component.css',
 })
-export class RoleFormComponent implements OnInit, OnChanges {
+export class RoleFormComponent implements OnInit, OnChanges, OnDestroy {
   @Input() role: Role | null = null;
   @Output() save = new EventEmitter<Role>();
   @Output() cancel = new EventEmitter<void>();
@@ -35,17 +37,26 @@ export class RoleFormComponent implements OnInit, OnChanges {
   roleForm!: FormGroup;
   camps = Object.values(Camp);
   alignments = Object.values(Alignment);
+  showGoalField = false;
+
+  private destroy$ = new Subject<void>();
 
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.initForm();
+    this.watchCampChanges();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['role'] && this.roleForm) {
       this.populateForm();
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   /** Initialise le formulaire */
@@ -55,7 +66,8 @@ export class RoleFormComponent implements OnInit, OnChanges {
       description: ['', [Validators.required, Validators.minLength(10)]],
       minPlayer: [8, [Validators.required, Validators.min(1)]],
       camp: [Camp.VILLAGERS, Validators.required],
-      goal: [null],
+      goal: ['', [Validators.maxLength(255)]], // Conditionnel
+      notes: [''], // Optionnel
       alignments: this.fb.array([]),
       powers: this.fb.array([]),
     });
@@ -63,6 +75,29 @@ export class RoleFormComponent implements OnInit, OnChanges {
     if (this.role) {
       this.populateForm();
     }
+  }
+
+  /** Écoute les changements du camp pour afficher/masquer le goal */
+  private watchCampChanges(): void {
+    this.roleForm
+      .get('camp')
+      ?.valueChanges.pipe(takeUntil(this.destroy$))
+      .subscribe((camp: Camp) => {
+        this.showGoalField = camp === Camp.INDEPENDENT;
+
+        const goalControl = this.roleForm.get('goal');
+
+        if (camp === Camp.INDEPENDENT) {
+          // champ requis
+          goalControl?.setValidators([Validators.required]);
+        } else {
+          // on enlève la validation + reset
+          goalControl?.clearValidators();
+          goalControl?.setValue('');
+        }
+
+        goalControl?.updateValueAndValidity();
+      });
   }
 
   /** Remplit le formulaire avec les données du rôle */
@@ -74,8 +109,12 @@ export class RoleFormComponent implements OnInit, OnChanges {
       description: this.role.description,
       minPlayer: this.role.minPlayer,
       camp: this.role.camp,
-      goal: this.role.goal,
+      goal: this.role.goal || '',
+      notes: this.role.notes || '',
     });
+
+    // Définir showGoalField selon le camp
+    this.showGoalField = this.role.camp === Camp.INDEPENDENT;
 
     // Alignements
     const alignmentsArray = this.roleForm.get('alignments') as FormArray;
@@ -84,7 +123,7 @@ export class RoleFormComponent implements OnInit, OnChanges {
       alignmentsArray.push(this.fb.control(alignment));
     });
 
-    // Pouvoirs (gérés par le power-form component)
+    // Pouvoirs
     const powersArray = this.roleForm.get('powers') as FormArray;
     powersArray.clear();
     this.role.powers.forEach((power, index) => {
@@ -152,7 +191,7 @@ export class RoleFormComponent implements OnInit, OnChanges {
       return;
     }
 
-    const formValue = this.roleForm.value;
+    const formValue = { ...this.roleForm.value };
 
     // Mettre à jour les positions des pouvoirs
     formValue.powers = formValue.powers.map((power: any, index: number) => ({

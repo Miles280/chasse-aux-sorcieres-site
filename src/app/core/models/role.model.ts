@@ -1,5 +1,4 @@
 import { Power } from './power.model';
-import { Goal } from './goal.model';
 import { Camp } from '../enums/camp.enum';
 import { Alignment } from '../enums/alignment.enum';
 
@@ -9,7 +8,8 @@ export interface Role {
   description: string;
   minPlayer: number;
   camp: Camp;
-  goal: Goal | null;
+  goal?: string;
+  notes?: string;
   powers: Power[];
   alignments: Alignment[];
 }
