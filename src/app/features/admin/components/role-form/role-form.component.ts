@@ -7,6 +7,7 @@ import {
   OnChanges,
   SimpleChanges,
   OnDestroy,
+  inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -21,6 +22,8 @@ import { Role } from 'src/app/core/models/role.model';
 import { Camp } from 'src/app/core/enums/camp.enum';
 import { Alignment } from 'src/app/core/enums/alignment.enum';
 import { PowerFormComponent } from '../power-form/power-form.component';
+import { RoleImageService } from '../../services/role-image.service';
+import { environment } from '@env/environment';
 
 @Component({
   selector: 'app-role-form',
@@ -34,14 +37,22 @@ export class RoleFormComponent implements OnInit, OnChanges, OnDestroy {
   @Output() save = new EventEmitter<Role>();
   @Output() cancel = new EventEmitter<void>();
 
+  baseUrl = environment.serverUrl;
+
   roleForm!: FormGroup;
   camps = Object.values(Camp);
   alignments = Object.values(Alignment);
   showGoalField = false;
 
+  selectedFile: File | null = null;
+  imagePreview: string | null = null;
+  isUploadingImage = false;
+  uploadError: string | null = null;
+
   private destroy$ = new Subject<void>();
 
-  constructor(private fb: FormBuilder) {}
+  private fb = inject(FormBuilder);
+  private roleImageService = inject(RoleImageService);
 
   ngOnInit(): void {
     this.initForm();
@@ -70,6 +81,7 @@ export class RoleFormComponent implements OnInit, OnChanges, OnDestroy {
       notes: [''], // Optionnel
       alignments: this.fb.array([]),
       powers: this.fb.array([]),
+      imageUrl: [''],
     });
 
     if (this.role) {
@@ -111,7 +123,13 @@ export class RoleFormComponent implements OnInit, OnChanges, OnDestroy {
       camp: this.role.camp,
       goal: this.role.goal || '',
       notes: this.role.notes || '',
+      imageUrl: this.role.imageUrl || '',
     });
+
+    // Afficher l'image existante
+    if (this.role.imageUrl) {
+      this.imagePreview = this.baseUrl + this.role.imageUrl;
+    }
 
     // Définir showGoalField selon le camp
     this.showGoalField = this.role.camp === Camp.INDEPENDENT;
@@ -146,6 +164,93 @@ export class RoleFormComponent implements OnInit, OnChanges, OnDestroy {
         }),
       );
     });
+  }
+
+  /** Gestion de la sélection de fichier */
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (!input.files || input.files.length === 0) {
+      return;
+    }
+
+    const file = input.files[0];
+
+    // Validation du type
+    if (!file.type.startsWith('image/')) {
+      this.uploadError = 'Veuillez sélectionner une image valide';
+      return;
+    }
+
+    // Validation de la taille (5MB max)
+    if (file.size > 5 * 1024 * 1024) {
+      this.uploadError = "L'image ne doit pas dépasser 5 Mo";
+      return;
+    }
+
+    this.selectedFile = file;
+    this.uploadError = null;
+
+    // Prévisualisation
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      this.imagePreview = e.target?.result as string;
+    };
+    reader.readAsDataURL(file);
+
+    this.uploadImage();
+  }
+
+  /** Upload de l'image */
+  uploadImage(): void {
+    if (!this.selectedFile) return;
+
+    this.isUploadingImage = true;
+    this.uploadError = null;
+
+    this.roleImageService
+      .uploadImage(this.selectedFile)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (response) => {
+          this.roleForm.patchValue({ imageUrl: response.imageUrl });
+          this.isUploadingImage = false;
+          this.selectedFile = null;
+        },
+        error: (error) => {
+          this.uploadError = "Erreur lors de l'upload de l'image";
+          this.isUploadingImage = false;
+          console.error('Upload error:', error);
+        },
+      });
+  }
+
+  /** Suppression de l'image */
+  removeImage(): void {
+    const currentImageUrl = this.roleForm.get('imageUrl')?.value;
+
+    if (currentImageUrl && this.role?.imageUrl === currentImageUrl) {
+      // Supprimer du serveur si c'est une image existante
+      this.roleImageService
+        .deleteImage(currentImageUrl)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: () => {
+            this.clearImage();
+          },
+          error: (error) => {
+            console.error('Delete error:', error);
+            this.clearImage(); // Clear anyway
+          },
+        });
+    } else {
+      this.clearImage();
+    }
+  }
+
+  private clearImage(): void {
+    this.imagePreview = null;
+    this.selectedFile = null;
+    this.roleForm.patchValue({ imageUrl: '' });
   }
 
   /** Getter pour FormArray powers */

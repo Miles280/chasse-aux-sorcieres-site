@@ -12,4 +12,5 @@ export interface Role {
   notes?: string;
   powers: Power[];
   alignments: Alignment[];
+  imageUrl?: string;
 }
