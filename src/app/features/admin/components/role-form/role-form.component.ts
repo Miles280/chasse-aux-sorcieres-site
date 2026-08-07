@@ -167,37 +167,54 @@ export class RoleFormComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   /** Gestion de la sélection de fichier */
-  onFileSelected(event: Event): void {
+  async onFileSelected(event: Event): Promise<void> {
     const input = event.target as HTMLInputElement;
-    if (!input.files || input.files.length === 0) {
-      return;
-    }
+    if (!input.files || input.files.length === 0) return;
 
     const file = input.files[0];
 
-    // Validation du type
     if (!file.type.startsWith('image/')) {
       this.uploadError = 'Veuillez sélectionner une image valide';
       return;
     }
 
-    // Validation de la taille (5MB max)
-    if (file.size > 5 * 1024 * 1024) {
-      this.uploadError = "L'image ne doit pas dépasser 5 Mo";
-      return;
+    // Supprimer l'ancienne image côté serveur si elle existe déjà
+    const oldImageUrl = this.roleForm.get('imageUrl')?.value;
+    if (oldImageUrl) {
+      this.roleImageService.deleteImage(oldImageUrl).subscribe({
+        error: (err) =>
+          console.error('Erreur suppression ancienne image:', err),
+      });
     }
 
-    this.selectedFile = file;
-    this.uploadError = null;
+    try {
+      const compressedFile = await this.roleImageService.compressImage(
+        file,
+        1600,
+        1800,
+        0.85,
+      );
 
-    // Prévisualisation
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      this.imagePreview = e.target?.result as string;
-    };
-    reader.readAsDataURL(file);
+      // Sécurité : vérifier la taille finale
+      if (compressedFile.size > 5 * 1024 * 1024) {
+        this.uploadError = "L'image reste trop lourde après compression";
+        return;
+      }
 
-    this.uploadImage();
+      this.selectedFile = compressedFile;
+      this.uploadError = null;
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.imagePreview = e.target?.result as string;
+      };
+      reader.readAsDataURL(compressedFile);
+
+      this.uploadImage();
+    } catch (err) {
+      this.uploadError = "Erreur lors du traitement de l'image";
+      console.error(err);
+    }
   }
 
   /** Upload de l'image */
@@ -228,8 +245,7 @@ export class RoleFormComponent implements OnInit, OnChanges, OnDestroy {
   removeImage(): void {
     const currentImageUrl = this.roleForm.get('imageUrl')?.value;
 
-    if (currentImageUrl && this.role?.imageUrl === currentImageUrl) {
-      // Supprimer du serveur si c'est une image existante
+    if (currentImageUrl) {
       this.roleImageService
         .deleteImage(currentImageUrl)
         .pipe(takeUntil(this.destroy$))
@@ -239,7 +255,7 @@ export class RoleFormComponent implements OnInit, OnChanges, OnDestroy {
           },
           error: (error) => {
             console.error('Delete error:', error);
-            this.clearImage(); // Clear anyway
+            this.clearImage();
           },
         });
     } else {
