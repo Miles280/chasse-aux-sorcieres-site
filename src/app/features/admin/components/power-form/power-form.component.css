@@ -1,0 +1,68 @@
+/* ===== DRAG PREVIEW FIX (BUG TOP LEFT) ===== */
+.cdk-drag-preview {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  margin: 0 !important;
+  border-radius: 8px;
+  background: rgba(28, 26, 38, 0.98);
+  border: 1px solid rgba(139, 92, 246, 0.5);
+  box-shadow:
+    0 10px 25px -5px rgba(0, 0, 0, 0.6),
+    0 20px 40px -10px rgba(109, 40, 217, 0.3);
+  opacity: 0.95;
+  cursor: grabbing !important;
+}
+
+/* ===== PLACEHOLDER ===== */
+.cdk-drag-placeholder {
+  opacity: 0;
+  border: 2px dashed rgba(139, 92, 246, 0.3);
+  border-radius: 8px;
+}
+
+/* ===== SUPPRESSION DU LAG ===== */
+.cdk-drag-animating {
+  transition: none !important;
+}
+
+.cdk-drop-list-dragging .power-card:not(.cdk-drag-placeholder) {
+  transition: none !important;
+}
+
+/* ===== DRAG HANDLE ===== */
+.drag-handle {
+  transition: transform 0.2s ease;
+}
+
+.drag-handle:hover {
+  transform: scale(1.1);
+}
+
+.drag-handle:active {
+  transform: scale(0.95);
+}
+
+/* ===== CARD ===== */
+.power-card {
+  transition: all 0.2s ease;
+}
+
+.power-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(109, 40, 217, 0.2);
+}
+
+/* ===== CURSEUR ===== */
+.cdk-drag {
+  cursor: grab;
+}
+
+.cdk-drag-dragging {
+  cursor: grabbing;
+}
+
+/* ===== SCROLL SMOOTH ===== */
+.cdk-drop-list {
+  scroll-behavior: smooth;
+}

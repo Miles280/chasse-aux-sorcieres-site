@@ -16,6 +16,21 @@ module.exports = {
         sorcières: "rgb(var(--sorcières) / <alpha-value>)",
         indépendants: "rgb(var(--indépendants) / <alpha-value>)",
       },
+      animation: {
+        'text-glow': 'text-glow 3s ease-in-out infinite',
+      },
+      keyframes: {
+        'text-glow': {
+          '0%, 100%': {
+            'background-size': '200% 200%',
+            'background-position': 'left center'
+          },
+          '50%': {
+            'background-size': '200% 200%',
+            'background-position': 'right center'
+          }
+        }
+      }
     }
   },
   plugins: [],

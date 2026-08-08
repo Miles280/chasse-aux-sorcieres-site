@@ -12,12 +12,11 @@ import { LoaderComponent } from './shared/components/loader/loader.component';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'chasse-aux-sorcieres-site';
 
+  // Injection volontaire : force l'initialisation de la session
+  // (restauration du token, refresh silencieux, timer proactif)
+  // dès le démarrage de l'app, sans dépendre d'un autre composant.
   private authService = inject(DiscordAuthService);
-
-  ngOnInit() {
-    this.authService.checkAuthStatus();
-  }
 }
