@@ -43,26 +43,24 @@ export class AdminDashboardPageComponent {
       color: 'success',
     },
     {
-      title: 'Préférences globales',
-      description:
-        'Ici sont modifiables : pays favori, langue (ou site), fuseau horaire',
+      title: 'À venir...',
+      description: 'Revenez plus tard !',
       icon: '⚙️',
-      route: '/gestion/preferences',
+      route: '/gestion',
       color: 'primary',
     },
     {
-      title: 'Compte entreprise',
-      description:
-        "Bénéficier des avantages d'un compte entreprise en entrant votre SIRET",
+      title: 'À venir...',
+      description: 'Revenez plus tard !',
       icon: '🏢',
-      route: '/gestion/company',
+      route: '/gestion',
       color: 'info',
     },
     {
-      title: 'Outils pour les hébergeurs',
-      description: 'Accédez aux outils de gestion de plusieurs logements',
+      title: 'À venir...',
+      description: 'Revenez plus tard !',
       icon: '🔧',
-      route: '/gestion/tools',
+      route: '/gestion',
       color: 'success',
     },
   ];
@@ -71,11 +69,5 @@ export class AdminDashboardPageComponent {
 
   navigateTo(route: string): void {
     this.router.navigate([route]);
-  }
-
-  logout(): void {
-    // Logique de déconnexion
-    console.log('Déconnexion...');
-    this.router.navigate(['/auth/login']);
   }
 }

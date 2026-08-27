@@ -1,32 +1,34 @@
-<div
-  class="min-h-screen bg-gradient-to-b from-[#0a0a0c] via-[#1a0b2e] to-[#0a0a0c] py-20"
->
+<app-ambient-background />
+
+<div class="min-h-screen relative z-10 pt-32 md:pt-36 pb-20">
   <div class="max-w-screen-xl mx-auto px-6">
     <!-- Header -->
     <div class="mb-12">
-      <button
-        (click)="goBack()"
-        class="group inline-flex items-center gap-2 text-violet-300 hover:text-white transition-colors mb-6"
-      >
-        <svg
-          class="w-5 h-5 transition-transform group-hover:-translate-x-1"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
+      @if (viewMode === "form") {
+        <button
+          (click)="showList()"
+          class="group inline-flex items-center gap-2 text-violet-300 hover:text-white transition-colors mb-6"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M15 19l-7-7 7-7"
-          />
-        </svg>
-        Retour
-      </button>
+          <svg
+            class="w-5 h-5 transition-transform group-hover:-translate-x-1"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
+          Retour à la liste
+        </button>
+      }
 
       <div class="text-center">
         <h1
-          class="font-test font-extrabold text-4xl md:text-5xl mb-4 animate-text-glow bg-gradient-to-r from-violet-600 via-fuchsia-400 to-violet-600"
+          class="font-test font-extrabold text-4xl md:text-5xl mb-4 pt-2 leading-[1.25] animate-text-glow bg-gradient-to-r from-violet-600 via-fuchsia-400 to-violet-600"
         >
           Gestion des rôles
         </h1>
@@ -39,31 +41,26 @@
       </div>
     </div>
 
-    <!-- View Toggle -->
-    <div class="flex justify-center gap-4 mb-12">
-      <button
-        (click)="showList()"
-        class="px-8 py-3 rounded-xl font-medium transition-all duration-300"
-        [ngClass]="
-          viewMode === 'list'
-            ? 'bg-gradient-to-r from-violet-600 via-fuchsia-500 to-violet-600 text-white shadow-[0_0_20px_rgba(109,40,217,0.4)]'
-            : 'bg-violet-900/20 border border-violet-500/30 text-violet-300 hover:border-violet-500/50 hover:text-white'
-        "
-      >
-        Liste des rôles
-      </button>
-      <button
-        (click)="handleCreate()"
-        class="px-8 py-3 rounded-xl font-medium transition-all duration-300"
-        [ngClass]="
-          viewMode === 'form'
-            ? 'bg-gradient-to-r from-violet-600 via-fuchsia-500 to-violet-600 text-white shadow-[0_0_20px_rgba(109,40,217,0.4)]'
-            : 'bg-violet-900/20 border border-violet-500/30 text-violet-300 hover:border-violet-500/50 hover:text-white'
-        "
-      >
-        Créer un rôle
-      </button>
-    </div>
+    <!-- View Toggle : uniquement visible en mode liste. En mode formulaire,
+         le bouton "Retour à la liste" ci-dessus remplace ce bloc, pour éviter
+         qu'un bouton "Créer un rôle" reste affiché comme actif alors qu'on
+         est peut-être en train de MODIFIER un rôle existant. -->
+    @if (viewMode === "list") {
+      <div class="flex justify-center gap-4 mb-12">
+        <button
+          (click)="showList()"
+          class="px-8 py-3 rounded-xl font-medium transition-all duration-300 bg-gradient-to-r from-violet-600 via-fuchsia-500 to-violet-600 text-white shadow-[0_0_20px_rgba(109,40,217,0.4)]"
+        >
+          Liste des rôles
+        </button>
+        <button
+          (click)="handleCreate()"
+          class="px-8 py-3 rounded-xl font-medium transition-all duration-300 bg-violet-900/20 border border-violet-500/30 text-violet-300 hover:border-violet-500/50 hover:text-white"
+        >
+          Créer un rôle
+        </button>
+      </div>
+    }
 
     <!-- LIST VIEW -->
     @if (viewMode === "list") {

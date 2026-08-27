@@ -1,17 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
 import { Role } from 'src/app/core/models/role.model';
 import { RolesService } from 'src/app/core/services/roles.service';
 import { RoleListComponent } from '../../components/role-list/role-list.component';
 import { RoleFormComponent } from '../../components/role-form/role-form.component';
+import { AmbientBackgroundComponent } from 'src/app/shared/components/ambient-background/ambient-background.component';
 
 type ViewMode = 'list' | 'form';
 
 @Component({
   selector: 'app-roles-management',
   standalone: true,
-  imports: [CommonModule, RoleListComponent, RoleFormComponent],
+  imports: [
+    CommonModule,
+    RoleListComponent,
+    RoleFormComponent,
+    AmbientBackgroundComponent,
+  ],
   templateUrl: './roles-management-page.component.html',
   styleUrl: './roles-management-page.component.css',
 })
@@ -21,10 +26,7 @@ export class RolesManagementPageComponent implements OnInit {
   selectedRole: Role | null = null;
   isLoading = false;
 
-  constructor(
-    private rolesService: RolesService,
-    private router: Router,
-  ) {}
+  constructor(private rolesService: RolesService) {}
 
   ngOnInit(): void {
     this.loadRoles();
@@ -66,7 +68,6 @@ export class RolesManagementPageComponent implements OnInit {
   /** Sauvegarde un rôle (création ou modification) */
   handleSave(role: Role): void {
     if (this.selectedRole?.id) {
-      // Mise à jour
       this.rolesService.updateRole(this.selectedRole.id, role).subscribe({
         next: () => {
           console.log('Rôle mis à jour');
@@ -76,7 +77,6 @@ export class RolesManagementPageComponent implements OnInit {
         error: (err) => console.error('Erreur mise à jour:', err),
       });
     } else {
-      // Création
       this.rolesService.createRole(role).subscribe({
         next: () => {
           console.log('Rôle créé');
@@ -101,10 +101,5 @@ export class RolesManagementPageComponent implements OnInit {
         error: (err) => console.error('Erreur suppression:', err),
       });
     }
-  }
-
-  /** Retourne à l'admin dashboard */
-  goBack(): void {
-    this.router.navigate(['/admin']);
   }
 }
