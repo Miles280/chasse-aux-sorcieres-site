@@ -1,7 +1,8 @@
-<!-- <app-ambient-background />
+<app-ambient-background />
 
 <section class="min-h-screen relative z-10 pt-28 pb-20">
   <div class="max-w-screen-xl mx-auto px-6">
+    <!-- Header -->
     <div class="text-center mb-14">
       <h1
         class="font-test font-extrabold text-4xl md:text-5xl mb-4 pt-2 leading-[1.25] bg-gradient-to-r from-violet-600 via-fuchsia-400 to-violet-600 bg-clip-text text-transparent"
@@ -16,6 +17,7 @@
       ></div>
     </div>
 
+    <!-- Onglets par camp -->
     <div class="flex flex-wrap justify-center gap-3 mb-10">
       <button
         type="button"
@@ -56,6 +58,7 @@
       </button>
     </div>
 
+    <!-- Recherche + tri -->
     <div
       class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 mb-10"
     >
@@ -94,12 +97,14 @@
       </select>
     </div>
 
+    <!-- Grille de cards -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       @for (role of paginatedRoles; track role.id) {
         <div
           (click)="openModal(role)"
           class="group relative overflow-hidden p-6 rounded-2xl bg-[#1c1a26] border border-white/10 hover:border-violet-500/50 hover:-translate-y-1 transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.5)] cursor-pointer flex flex-col"
         >
+          <!-- Glow -->
           <div
             class="absolute -top-16 -right-16 w-48 h-48 bg-violet-800/10 blur-[90px] rounded-full pointer-events-none group-hover:bg-violet-600/20 transition-colors duration-500"
           ></div>
@@ -172,6 +177,7 @@
       }
     </div>
 
+    <!-- Pagination -->
     @if (totalPages > 1) {
       <div class="flex items-center justify-center gap-1.5 mt-12">
         <button
@@ -206,6 +212,7 @@
   </div>
 </section>
 
+<!-- Modale de détail -->
 @if (selectedRole) {
   <div
     class="fixed inset-0 bg-black/80 backdrop-blur-md z-[100] flex items-center justify-center p-4 animate-fade"
@@ -215,6 +222,7 @@
       class="relative bg-[#1c1a26] border border-white/10 rounded-2xl p-8 max-w-lg w-full shadow-2xl animate-popIn"
       (click)="$event.stopPropagation()"
     >
+      <!-- Glow -->
       <div
         class="absolute -top-20 -left-20 w-72 h-72 bg-violet-800/10 blur-[100px] rounded-full pointer-events-none"
       ></div>
@@ -315,6 +323,4 @@
       </div>
     </div>
   </div>
-} -->
-
-<app-wip></app-wip>
+}

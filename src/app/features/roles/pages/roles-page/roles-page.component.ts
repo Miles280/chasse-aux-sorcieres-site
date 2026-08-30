@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Role } from 'src/app/core/models/role.model';
 import { RolesService } from 'src/app/core/services/roles.service';
-import { WipComponent } from 'src/app/shared/components/wip/wip.component';
 import { AmbientBackgroundComponent } from 'src/app/shared/components/ambient-background/ambient-background.component';
 import { Camp } from 'src/app/core/enums/camp.enum';
 import { Alignment } from 'src/app/core/enums/alignment.enum';
@@ -20,13 +19,7 @@ type SortOption = 'name-asc' | 'name-desc' | 'players-asc' | 'players-desc';
 @Component({
   selector: 'app-roles-page',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    WipComponent,
-    AmbientBackgroundComponent,
-    WipComponent,
-  ],
+  imports: [CommonModule, FormsModule, AmbientBackgroundComponent],
   templateUrl: './roles-page.component.html',
   styleUrl: './roles-page.component.css',
 })
