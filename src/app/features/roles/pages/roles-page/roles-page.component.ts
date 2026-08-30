@@ -12,6 +12,7 @@ import {
 } from 'src/app/core/utils/alignment-display.util';
 import { getCampLabel } from 'src/app/core/utils/camp-display.util';
 import { environment } from '@env/environment';
+import { WipComponent } from 'src/app/shared/components/wip/wip.component';
 
 type CampTab = 'villagers' | 'witch' | 'independent';
 type SortOption = 'name-asc' | 'name-desc' | 'players-asc' | 'players-desc';
@@ -19,7 +20,12 @@ type SortOption = 'name-asc' | 'name-desc' | 'players-asc' | 'players-desc';
 @Component({
   selector: 'app-roles-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, AmbientBackgroundComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    AmbientBackgroundComponent,
+    WipComponent,
+  ],
   templateUrl: './roles-page.component.html',
   styleUrl: './roles-page.component.css',
 })
