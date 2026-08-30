@@ -78,5 +78,9 @@
   --indépendants: 179 212 227;
 }
 
-
-
+.animate-text-glow {
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+}

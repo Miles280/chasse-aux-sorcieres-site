@@ -27,4 +27,27 @@ export class RolesService {
       .get<HydraCollection<Role>>(`${this.env.apiUrl}/roles`, { params })
       .pipe(map((response) => response.member));
   }
+
+  /** Récupère un rôle par son ID */
+  getRole(id: number): Observable<Role> {
+    return this.http.get<Role>(`${this.env.apiUrl}/roles/${id}`);
+  }
+
+  /** Crée un nouveau rôle */
+  createRole(role: Omit<Role, 'id'>): Observable<Role> {
+    return this.http.post<Role>(`${this.env.apiUrl}/roles`, role, {
+      headers: { 'Content-Type': 'application/ld+json' },
+    });
+  }
+
+  /** Met à jour un rôle existant */
+  updateRole(id: number, role: Role): Observable<Role> {
+    return this.http.patch<Role>(`${this.env.apiUrl}/roles/${id}`, role, {
+      headers: { 'Content-Type': 'application/merge-patch+json' },
+    });
+  }
+  /** Supprime un rôle */
+  deleteRole(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.env.apiUrl}/roles/${id}`);
+  }
 }

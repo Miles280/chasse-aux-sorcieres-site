@@ -1,0 +1,55 @@
+.loader-wrapper {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #08040e;
+}
+
+.iconLoaderProgress {
+  width: 240px;
+  height: 240px;
+  margin: 0;
+}
+
+.iconLoaderProgress svg {
+  display: block;
+}
+
+/* Style commun aux cercles */
+circle {
+  fill: none;
+  stroke-width: 10; /* Un peu plus épais pour le style */
+  stroke-linecap: round;
+}
+
+/* Le cercle gris fixe */
+.circle-bg {
+  stroke: #1f1f23;
+}
+
+/* Le cercle violet qui tourne */
+.circle-active {
+  stroke: #7c3aed;
+  stroke-dasharray: 628; /* Circonférence : 2 * PI * 100 */
+  animation: dashAnimation 2s ease-in-out infinite;
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+@keyframes dashAnimation {
+  0% {
+    stroke-dashoffset: 628;
+    transform: rotate(-90deg);
+  }
+  50% {
+    stroke-dashoffset: 150;
+    transform: rotate(90deg);
+  }
+  100% {
+    stroke-dashoffset: 628;
+    transform: rotate(270deg);
+  }
+}

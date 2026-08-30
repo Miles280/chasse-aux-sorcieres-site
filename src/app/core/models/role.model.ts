@@ -1,17 +1,16 @@
-import { Camp } from './camp.model';
 import { Power } from './power.model';
-import { Alignment } from './alignment.model';
+import { Camp } from '../enums/camp.enum';
+import { Alignment } from '../enums/alignment.enum';
 
 export interface Role {
-  id: number;
+  id?: number;
   name: string;
   description: string;
   minPlayer: number;
   camp: Camp;
-  goal?: {
-    id: number;
-    name: string;
-  } | null;
+  goal?: string;
+  notes?: string;
   powers: Power[];
-  alignment: Alignment[];
+  alignments: Alignment[];
+  imageUrl?: string;
 }
