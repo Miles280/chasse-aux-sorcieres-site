@@ -19,17 +19,29 @@ import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
 export class PowerFormComponent {
   @Input() powersFormArray!: FormArray;
 
+  // Pouvoirs actuellement dépliés. Indexé par référence de FormGroup (et non
+  // par position dans le tableau) pour que l'état de dépli suive correctement
+  // le bon pouvoir même après un drag & drop qui change son index.
+  // Conséquence pratique : en édition, les pouvoirs existants démarrent tous
+  // repliés (leurs FormGroup ne sont jamais ajoutés à ce Set) ; un pouvoir
+  // fraîchement ajouté via addPower() démarre lui déplié pour le remplir direct.
+  expandedPowers = new Set<FormGroup>();
+
   constructor(private fb: FormBuilder) {}
 
-  /** Ajoute un nouveau pouvoir */
+  /** Ajoute un nouveau pouvoir, et le déplie directement pour le remplir */
   addPower(): void {
     const position = this.powersFormArray.length;
-    this.powersFormArray.push(this.createPowerFormGroup(position));
+    const group = this.createPowerFormGroup(position);
+    this.powersFormArray.push(group);
+    this.expandedPowers.add(group);
   }
 
   /** Supprime un pouvoir */
   removePower(index: number): void {
     if (confirm('Supprimer ce pouvoir ?')) {
+      const group = this.powersFormArray.at(index) as FormGroup;
+      this.expandedPowers.delete(group);
       this.powersFormArray.removeAt(index);
       this.updatePowerPositions();
     }
@@ -47,6 +59,25 @@ export class PowerFormComponent {
     this.powersFormArray.insert(event.currentIndex, controlToMove);
 
     this.updatePowerPositions();
+  }
+
+  /** Plie / déplie la carte d'un pouvoir */
+  togglePowerExpanded(group: FormGroup): void {
+    if (this.expandedPowers.has(group)) {
+      this.expandedPowers.delete(group);
+    } else {
+      this.expandedPowers.add(group);
+    }
+  }
+
+  isPowerExpanded(group: FormGroup): boolean {
+    return this.expandedPowers.has(group);
+  }
+
+  /** Titre affiché dans l'en-tête replié, avec repli si le titre est encore vide */
+  powerTitle(group: FormGroup): string {
+    const title = group.get('title')?.value?.trim();
+    return title || 'Pouvoir sans titre';
   }
 
   /** Met à jour les positions après réorganisation */

@@ -25,6 +25,8 @@ import { PowerFormComponent } from '../power-form/power-form.component';
 import { RoleImageService } from '../../services/role-image.service';
 import { environment } from '@env/environment';
 
+type FormSection = 'general' | 'image' | 'powers' | 'notes';
+
 @Component({
   selector: 'app-role-form',
   standalone: true,
@@ -48,6 +50,12 @@ export class RoleFormComponent implements OnInit, OnChanges, OnDestroy {
   imagePreview: string | null = null;
   isUploadingImage = false;
   uploadError: string | null = null;
+
+  // --- Accordéon ---
+  // "Informations générales" et "Pouvoirs" sont ouverts par défaut (contenu
+  // essentiel). "Image" et "Notes" restent fermés par défaut car optionnels,
+  // sauf s'ils contiennent déjà quelque chose (cf. populateForm).
+  private activeSections = new Set<FormSection>(['general', 'powers']);
 
   private destroy$ = new Subject<void>();
 
@@ -164,6 +172,58 @@ export class RoleFormComponent implements OnInit, OnChanges, OnDestroy {
         }),
       );
     });
+
+    // Ouvre automatiquement les sections optionnelles si elles contiennent déjà du contenu
+    if (this.role.imageUrl) {
+      this.activeSections.add('image');
+    }
+    if (this.role.notes) {
+      this.activeSections.add('notes');
+    }
+  }
+
+  // ---------- Accordéon ----------
+
+  toggleSection(section: FormSection): void {
+    if (this.activeSections.has(section)) {
+      this.activeSections.delete(section);
+    } else {
+      this.activeSections.add(section);
+    }
+  }
+
+  isSectionOpen(section: FormSection): boolean {
+    return this.activeSections.has(section);
+  }
+
+  /** Un champ invalide ET touché dans "Informations générales" ? Sert au point rouge sur l'en-tête replié */
+  get hasGeneralSectionErrors(): boolean {
+    const controls = [
+      this.roleForm?.get('name'),
+      this.roleForm?.get('description'),
+      this.roleForm?.get('goal'),
+    ];
+    return controls.some(
+      (control) => !!control && control.invalid && control.touched,
+    );
+  }
+
+  get hasPowersSectionErrors(): boolean {
+    return this.powersFormArray.invalid && this.powersFormArray.touched;
+  }
+
+  /** Ouvre les sections contenant des erreurs, pour qu'elles soient visibles après un submit refusé */
+  private openSectionsWithErrors(): void {
+    if (
+      this.roleForm.get('name')?.invalid ||
+      this.roleForm.get('description')?.invalid ||
+      this.roleForm.get('goal')?.invalid
+    ) {
+      this.activeSections.add('general');
+    }
+    if (this.powersFormArray.invalid) {
+      this.activeSections.add('powers');
+    }
   }
 
   /** Gestion de la sélection de fichier */
@@ -309,6 +369,7 @@ export class RoleFormComponent implements OnInit, OnChanges, OnDestroy {
   onSubmit(): void {
     if (this.roleForm.invalid) {
       this.roleForm.markAllAsTouched();
+      this.openSectionsWithErrors();
       return;
     }
 
@@ -320,11 +381,13 @@ export class RoleFormComponent implements OnInit, OnChanges, OnDestroy {
       position: index,
     }));
 
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     this.save.emit(formValue);
   }
 
   /** Annule l'édition */
   onCancel(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     this.cancel.emit();
   }
 

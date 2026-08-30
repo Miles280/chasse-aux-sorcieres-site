@@ -32,6 +32,7 @@
 
 /* ===== DRAG HANDLE ===== */
 .drag-handle {
+  cursor: grab;
   transition: transform 0.2s ease;
 }
 
@@ -40,6 +41,7 @@
 }
 
 .drag-handle:active {
+  cursor: grabbing;
   transform: scale(0.95);
 }
 
@@ -53,16 +55,35 @@
   box-shadow: 0 4px 12px rgba(109, 40, 217, 0.2);
 }
 
-/* ===== CURSEUR ===== */
-.cdk-drag {
-  cursor: grab;
-}
-
-.cdk-drag-dragging {
-  cursor: grabbing;
-}
-
 /* ===== SCROLL SMOOTH ===== */
 .cdk-drop-list {
   scroll-behavior: smooth;
+}
+
+/* --- Dépli d'un pouvoir --- */
+.power-body-appear {
+  animation: power-body-appear 0.18s ease-out;
+}
+
+@keyframes power-body-appear {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Supprime les flèches natives du champ "Limite d'utilisation" --- */
+.no-spinner::-webkit-inner-spin-button,
+.no-spinner::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.no-spinner {
+  -moz-appearance: textfield;
+  appearance: textfield;
 }

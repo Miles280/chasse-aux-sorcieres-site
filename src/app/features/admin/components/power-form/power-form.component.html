@@ -1,48 +1,49 @@
-<div class="mb-8 pb-8 border-b border-white/10">
-  <div class="flex justify-between items-center mb-6">
-    <h3 class="text-lg font-semibold text-violet-300">Pouvoirs</h3>
-    <button
-      type="button"
-      (click)="addPower()"
-      class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-violet-900/30 border border-violet-500/30 text-violet-300 hover:bg-violet-900/50 hover:border-violet-500 hover:text-white transition-all duration-300 text-sm font-medium"
-    >
-      <svg
-        class="w-4 h-4"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M12 4v16m8-8H4"
-        />
-      </svg>
-      Ajouter un pouvoir
-    </button>
-  </div>
+<div class="flex justify-between items-center mb-4">
+  <p class="text-xs text-gray-500">Clique un pouvoir pour le déplier</p>
+  <button
+    type="button"
+    (click)="addPower()"
+    class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-violet-900/30 border border-violet-500/30 text-violet-300 hover:bg-violet-900/50 hover:border-violet-500 hover:text-white transition-all duration-300 text-sm font-medium shrink-0"
+  >
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M12 4v16m8-8H4"
+      />
+    </svg>
+    Ajouter un pouvoir
+  </button>
+</div>
 
-  <!-- Powers List (Drag & Drop) -->
-  <div cdkDropList (cdkDropListDropped)="dropPower($event)" class="space-y-4">
-    @for (
-      powerControl of powersFormArray.controls;
-      track powerControl;
-      let i = $index
-    ) {
-      <div
-        cdkDrag
-        [cdkDragRootElement]="'.power-card'"
-        [formGroup]="asFormGroup(powerControl)"
-        class="power-card group relative bg-[#0a0a0c]/80 rounded-lg border border-violet-500/20 p-4 hover:border-violet-500/40 transition-all"
-      >
-        <!-- Drag Handle -->
+<!-- Powers List (Drag & Drop) -->
+<div
+  cdkDropList
+  cdkDropListOrientation="vertical"
+  (cdkDropListDropped)="dropPower($event)"
+  class="space-y-2"
+>
+  @for (
+    powerControl of powersFormArray.controls;
+    track powerControl;
+    let i = $index
+  ) {
+    <div
+      cdkDrag
+      cdkDragLockAxis="y"
+      [cdkDragRootElement]="'.power-card'"
+      [formGroup]="asFormGroup(powerControl)"
+      class="power-card group bg-[#0a0a0c]/80 rounded-lg border border-violet-500/20 hover:border-violet-500/40 transition-all overflow-hidden"
+    >
+      <!-- En-tête : toujours visible, replié ou déplié -->
+      <div class="flex items-center gap-1 pl-2 pr-3 py-2.5">
         <div
           cdkDragHandle
-          class="drag-handle absolute left-2 top-4 cursor-grab active:cursor-grabbing text-gray-600 hover:text-violet-400 transition-colors"
+          class="drag-handle shrink-0 cursor-grab active:cursor-grabbing text-gray-600 hover:text-violet-400 transition-colors p-1.5"
         >
           <svg
-            class="w-5 h-5"
+            class="w-4 h-4"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -56,14 +57,55 @@
           </svg>
         </div>
 
-        <!-- Delete Button -->
+        <button
+          type="button"
+          (click)="togglePowerExpanded(asFormGroup(powerControl))"
+          class="flex-1 flex items-center gap-2.5 text-left min-w-0 py-0.5"
+        >
+          <span
+            class="shrink-0 w-5 h-5 flex items-center justify-center text-[11px] font-semibold bg-violet-900/40 text-violet-300 rounded"
+          >
+            {{ i + 1 }}
+          </span>
+          <span class="text-sm font-medium text-white truncate">
+            {{ powerTitle(asFormGroup(powerControl)) }}
+          </span>
+          @if (asFormGroup(powerControl).invalid) {
+            <span
+              class="w-1.5 h-1.5 rounded-full bg-red-400 shrink-0"
+              title="Champs incomplets"
+            ></span>
+          }
+        </button>
+
+        <button
+          type="button"
+          (click)="togglePowerExpanded(asFormGroup(powerControl))"
+          class="shrink-0 text-gray-500 hover:text-violet-300 transition-colors p-1.5"
+        >
+          <svg
+            class="w-4 h-4 transition-transform duration-200"
+            [class.rotate-180]="isPowerExpanded(asFormGroup(powerControl))"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
+        </button>
+
         <button
           type="button"
           (click)="removePower(i)"
-          class="absolute right-2 top-4 text-red-400 hover:text-red-300 transition-colors"
+          class="shrink-0 text-red-400 hover:text-red-300 transition-colors p-1.5"
         >
           <svg
-            class="w-5 h-5"
+            class="w-4 h-4"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -76,19 +118,13 @@
             />
           </svg>
         </button>
+      </div>
 
-        <div class="pl-8 pr-8">
-          <!-- Position Badge -->
-          <div class="mb-3">
-            <span
-              class="inline-block px-2 py-1 text-xs font-medium bg-violet-900/40 text-violet-300 rounded"
-            >
-              Position {{ i + 1 }}
-            </span>
-          </div>
-
-          <!-- Title -->
-          <div class="mb-3">
+      <!-- Corps déplié -->
+      @if (isPowerExpanded(asFormGroup(powerControl))) {
+        <div class="px-4 pb-4 pt-1 border-t border-white/5 power-body-appear">
+          <!-- Titre -->
+          <div class="mb-3 mt-3">
             <label class="block text-xs font-medium text-gray-400 mb-1">
               Titre du pouvoir <span class="text-red-400">*</span>
             </label>
@@ -107,84 +143,89 @@
             </label>
             <textarea
               formControlName="description"
-              rows="4"
+              rows="3"
               placeholder="Comment fonctionne ce pouvoir..."
               class="w-full px-3 py-2 text-sm rounded-lg bg-[#0a0a0c] border border-violet-500/30 text-white placeholder-gray-600 focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500/20 transition-all resize-vertical"
             ></textarea>
           </div>
 
-          <!-- Options -->
-          <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-3">
-            <label
-              class="flex items-center gap-2 text-xs text-gray-300 cursor-pointer"
-            >
+          <!-- Options (pills) + limite d'utilisation, sur une seule ligne compacte -->
+          <div class="flex flex-wrap items-center gap-2">
+            <label class="relative cursor-pointer">
               <input
                 type="checkbox"
                 formControlName="isDayPower"
-                class="rounded border-violet-500/30 bg-[#0a0a0c] text-violet-500 focus:ring-violet-500/20"
+                class="peer sr-only"
               />
-              Pouvoir de jour
+              <div
+                class="px-3 py-1.5 rounded-lg border text-xs font-medium transition-all duration-300 border-violet-500/30 text-gray-400 hover:border-violet-500/50 hover:text-gray-300 peer-checked:bg-violet-900/50 peer-checked:border-violet-500 peer-checked:text-white"
+              >
+                Jour
+              </div>
             </label>
 
-            <label
-              class="flex items-center gap-2 text-xs text-gray-300 cursor-pointer"
-            >
+            <label class="relative cursor-pointer">
               <input
                 type="checkbox"
                 formControlName="isPassive"
-                class="rounded border-violet-500/30 bg-[#0a0a0c] text-violet-500 focus:ring-violet-500/20"
+                class="peer sr-only"
               />
-              Pouvoir passif
+              <div
+                class="px-3 py-1.5 rounded-lg border text-xs font-medium transition-all duration-300 border-violet-500/30 text-gray-400 hover:border-violet-500/50 hover:text-gray-300 peer-checked:bg-violet-900/50 peer-checked:border-violet-500 peer-checked:text-white"
+              >
+                Passif
+              </div>
             </label>
 
-            <label
-              class="flex items-center gap-2 text-xs text-gray-300 cursor-pointer"
-            >
+            <label class="relative cursor-pointer">
               <input
                 type="checkbox"
                 formControlName="leavingHouse"
-                class="rounded border-violet-500/30 bg-[#0a0a0c] text-violet-500 focus:ring-violet-500/20"
+                class="peer sr-only"
               />
-              Sort de la maison
+              <div
+                class="px-3 py-1.5 rounded-lg border text-xs font-medium transition-all duration-300 border-violet-500/30 text-gray-400 hover:border-violet-500/50 hover:text-gray-300 peer-checked:bg-violet-900/50 peer-checked:border-violet-500 peer-checked:text-white"
+              >
+                Sort de la maison
+              </div>
             </label>
-          </div>
 
-          <!-- Usage Limit -->
-          <div>
-            <label class="block text-xs font-medium text-gray-400 mb-1">
-              Limite d'utilisation (vide = illimité)
-            </label>
-            <input
-              type="number"
-              formControlName="usageLimit"
-              min="0"
-              placeholder="Illimité"
-              class="w-full md:w-32 px-3 py-2 text-sm rounded-lg bg-[#0a0a0c] border border-violet-500/30 text-white placeholder-gray-600 focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500/20 transition-all"
-            />
+            <div class="flex items-center gap-1.5 ml-auto">
+              <label class="text-xs text-gray-500 whitespace-nowrap"
+                >Limite</label
+              >
+              <input
+                type="number"
+                formControlName="usageLimit"
+                min="0"
+                placeholder="∞"
+                class="no-spinner w-16 px-2 py-1.5 text-sm text-center rounded-lg bg-[#0a0a0c] border border-violet-500/30 text-white placeholder-gray-600 focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500/20 transition-all"
+              />
+            </div>
           </div>
         </div>
-      </div>
-    } @empty {
-      <div
-        class="text-center py-12 bg-[#0a0a0c]/50 rounded-lg border border-violet-500/20"
+      }
+    </div>
+  } @empty {
+    <div
+      class="text-center py-12 bg-[#0a0a0c]/50 rounded-lg border border-violet-500/20"
+    >
+      <svg
+        class="w-12 h-12 text-gray-600 mx-auto mb-3"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
       >
-        <svg
-          class="w-12 h-12 text-gray-600 mx-auto mb-3"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M13 10V3L4 14h7v7l9-11h-7z"
-          />
-        </svg>
-        <p class="text-gray-500 text-sm">
-          Aucun pouvoir ajouté. Cliquez sur "Ajouter un pouvoir".
-        </p>
-      </div>
-    }
-  </div>
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M13 10V3L4 14h7v7l9-11h-7z"
+        />
+      </svg>
+      <p class="text-gray-500 text-sm">
+        Aucun pouvoir ajouté. Cliquez sur "Ajouter un pouvoir".
+      </p>
+    </div>
+  }
 </div>
