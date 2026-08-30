@@ -25,6 +25,7 @@ type SortOption = 'name-asc' | 'name-desc' | 'players-asc' | 'players-desc';
     FormsModule,
     WipComponent,
     AmbientBackgroundComponent,
+    WipComponent,
   ],
   templateUrl: './roles-page.component.html',
   styleUrl: './roles-page.component.css',
