@@ -152,7 +152,11 @@
       L'équipe
     </a>
   </li>
-  @if ((authService.role$ | async)?.includes("ROLE_MJ")) {
+  @if (
+    (authService.role$ | async)?.includes("ROLE_ADMIN") ||
+    (authService.role$ | async)?.includes("ROLE_DEV") ||
+    (authService.role$ | async)?.includes("ROLE_WRITER")
+  ) {
     <li>
       <a
         routerLink="/gestion"
