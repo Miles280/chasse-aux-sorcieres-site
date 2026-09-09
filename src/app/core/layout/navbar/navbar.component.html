@@ -140,18 +140,6 @@
       Rôles
     </a>
   </li>
-  <li>
-    <a
-      routerLink="/equipe"
-      (click)="closeMenu()"
-      class="transition-colors hover:text-blue-400"
-      [class.text-white]="!isScrolled && !mobile"
-      [class.text-gray-900]="isScrolled && !mobile"
-      [class.dark:text-white]="isScrolled && !mobile"
-    >
-      L'équipe
-    </a>
-  </li>
   @if (
     (authService.role$ | async)?.includes("ROLE_ADMIN") ||
     (authService.role$ | async)?.includes("ROLE_DEV") ||
