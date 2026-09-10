@@ -50,6 +50,7 @@ export class RoleFormComponent implements OnInit, OnChanges, OnDestroy {
   imagePreview: string | null = null;
   isUploadingImage = false;
   uploadError: string | null = null;
+  showImageModal = false;
 
   // --- Accordéon ---
   // "Informations générales" et "Pouvoirs" sont ouverts par défaut (contenu
@@ -326,7 +327,17 @@ export class RoleFormComponent implements OnInit, OnChanges, OnDestroy {
   private clearImage(): void {
     this.imagePreview = null;
     this.selectedFile = null;
+    this.showImageModal = false;
     this.roleForm.patchValue({ imageUrl: '' });
+  }
+
+  /** Modale d'agrandissement de l'image */
+  openImageModal(): void {
+    this.showImageModal = true;
+  }
+
+  closeImageModal(): void {
+    this.showImageModal = false;
   }
 
   /** Getter pour FormArray powers */

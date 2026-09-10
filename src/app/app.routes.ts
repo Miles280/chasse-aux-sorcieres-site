@@ -17,11 +17,6 @@ export const routes: Routes = [
       import('./features/roles/roles.routes').then((m) => m.ROLES_ROUTES),
   },
   {
-    path: 'equipe',
-    loadChildren: () =>
-      import('./features/team/team.routes').then((m) => m.TEAM_ROUTES),
-  },
-  {
     path: 'auth',
     loadChildren: () =>
       import('./features/auth/auth.routes').then((m) => m.AUTH_ROUTES),

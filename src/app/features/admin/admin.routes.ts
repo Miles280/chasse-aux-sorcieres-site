@@ -6,7 +6,7 @@ export const ADMIN_ROUTES: Routes = [
   {
     path: '',
     component: AdminDashboardPageComponent,
-    canActivate: [roleGuard(['ROLE_ADMIN'])],
+    canActivate: [roleGuard(['ROLE_ADMIN', 'ROLE_DEV', 'ROLE_WRITER'])],
   },
   {
     path: 'roles',
@@ -14,7 +14,7 @@ export const ADMIN_ROUTES: Routes = [
       import('./pages/roles-management/roles-management-page.component').then(
         (m) => m.RolesManagementPageComponent,
       ),
-    canActivate: [roleGuard(['ROLE_ADMIN'])],
+    canActivate: [roleGuard(['ROLE_ADMIN', 'ROLE_DEV', 'ROLE_WRITER'])],
   },
   {
     path: 'shop',
@@ -22,6 +22,6 @@ export const ADMIN_ROUTES: Routes = [
       import('./pages/shop-management/shop-management.component').then(
         (m) => m.ShopManagementPageComponent,
       ),
-    canActivate: [roleGuard(['ROLE_ADMIN'])],
+    canActivate: [roleGuard(['ROLE_ADMIN', 'ROLE_DEV'])],
   },
 ];

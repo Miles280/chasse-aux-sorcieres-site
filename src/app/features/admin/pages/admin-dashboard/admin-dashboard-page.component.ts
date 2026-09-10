@@ -21,7 +21,7 @@ export class AdminDashboardPageComponent {
   adminCards: AdminCard[] = [
     {
       title: 'Rôles',
-      description: 'Ici vous pourrez modifier les rôles',
+      description: 'Gérez les rôles et leurs pouvoirs pour les parties.',
       icon: '👤',
       route: '/gestion/roles',
       color: 'primary',
@@ -29,15 +29,14 @@ export class AdminDashboardPageComponent {
     {
       title: 'Casino',
       description:
-        'Ici sont modifiables : mot de passe, email, numéro de téléphone',
+        'Gérez le casino et les fonctionnalités associées du serveur.',
       icon: '🎰',
       route: '/gestion/casino',
       color: 'info',
     },
     {
       title: 'Boutique',
-      description:
-        'Ici sont visibles : historique de paiement, historique de versements',
+      description: 'Gérez la boutique, les objets et l’économie.',
       icon: '💰',
       route: '/gestion/shop',
       color: 'success',

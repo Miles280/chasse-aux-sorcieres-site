@@ -110,25 +110,43 @@
                   <label class="block text-sm font-medium text-gray-300 mb-2">
                     Camp <span class="text-red-400">*</span>
                   </label>
-                  <select
-                    formControlName="camp"
-                    class="w-full px-4 py-3 rounded-lg bg-[#0a0a0c] border border-violet-500/30 text-white focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/20 transition-all"
-                  >
-                    @for (camp of camps; track camp) {
-                      <option [value]="camp">{{ getCampLabel(camp) }}</option>
-                    }
-                  </select>
+                  <!-- appearance-none retire la flèche native du navigateur (le "truc blanc" au survol),
+                       remplacée par notre propre chevron, cohérent avec le reste du design -->
+                  <div class="relative">
+                    <select
+                      formControlName="camp"
+                      class="w-full appearance-none px-4 py-3 pr-10 rounded-lg bg-[#0a0a0c] border border-violet-500/30 text-white focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/20 transition-all"
+                    >
+                      @for (camp of camps; track camp) {
+                        <option [value]="camp">{{ getCampLabel(camp) }}</option>
+                      }
+                    </select>
+                    <svg
+                      class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </div>
                 </div>
                 <div>
                   <label class="block text-sm font-medium text-gray-300 mb-2">
                     Nombre minimum de joueurs
                     <span class="text-red-400">*</span>
                   </label>
+                  <!-- no-spinner retire les flèches natives haut/bas au survol -->
                   <input
                     type="number"
                     formControlName="minPlayer"
                     min="1"
-                    class="w-full px-4 py-3 rounded-lg bg-[#0a0a0c] border border-violet-500/30 text-white focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/20 transition-all"
+                    class="no-spinner w-full px-4 py-3 rounded-lg bg-[#0a0a0c] border border-violet-500/30 text-white focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/20 transition-all"
                   />
                 </div>
               </div>
@@ -196,7 +214,7 @@
                 <img
                   [src]="imagePreview"
                   alt=""
-                  class="w-7 h-7 rounded object-cover border border-violet-500/30 shrink-0"
+                  class="w-7 h-7 rounded-full object-cover border-2 border-violet-500/40 shrink-0"
                 />
               } @else {
                 <svg
@@ -244,19 +262,59 @@
               <!-- Preview de l'image -->
               @if (imagePreview) {
                 <div class="mb-4">
-                  <div class="relative inline-block">
-                    <img
-                      [src]="imagePreview"
-                      alt="Aperçu"
-                      class="w-48 h-48 object-cover rounded-lg border-2 border-violet-500/30"
-                    />
+                  <div class="relative inline-block group/image">
+                    <!-- Clic sur l'image = agrandissement en modale -->
                     <button
                       type="button"
-                      (click)="removeImage()"
-                      class="absolute -top-2 -right-2 bg-red-500 hover:bg-red-600 text-white rounded-full w-8 h-8 flex items-center justify-center transition-colors"
+                      (click)="openImageModal()"
+                      class="block rounded-lg overflow-hidden border-2 border-violet-500/30 group-hover/image:border-violet-500/60 transition-colors"
+                    >
+                      <img
+                        [src]="imagePreview"
+                        alt="Aperçu"
+                        class="w-48 h-48 object-cover"
+                      />
+                    </button>
+
+                    <!-- Overlay au survol, indique qu'on peut agrandir -->
+                    <div
+                      class="absolute inset-0 rounded-lg bg-black/0 group-hover/image:bg-black/40 transition-colors flex items-center justify-center pointer-events-none"
+                    >
+                      <svg
+                        class="w-7 h-7 text-white opacity-0 group-hover/image:opacity-100 transition-opacity"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"
+                        />
+                      </svg>
+                    </div>
+
+                    <!-- Suppression : bouton rond propre, séparé du clic d'agrandissement -->
+                    <button
+                      type="button"
+                      (click)="removeImage(); $event.stopPropagation()"
+                      class="absolute -top-2 -right-2 w-7 h-7 flex items-center justify-center rounded-full bg-red-500/90 hover:bg-red-500 border border-white/20 text-white shadow-lg transition-colors"
                       title="Supprimer l'image"
                     >
-                      ×
+                      <svg
+                        class="w-3.5 h-3.5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2.5"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
                     </button>
                   </div>
                 </div>
@@ -439,7 +497,7 @@
   </div>
 
   <!-- Barre d'actions fixe : toujours accessible, même avec un formulaire long -->
-  <div class="bottom-0 left-0 right-0 z-40 backdrop-blur-md">
+  <div class="bottom-0 left-0 right-0 z-40">
     <div
       class="max-w-4xl mx-auto px-8 py-4 flex flex-col sm:flex-row justify-end gap-4"
     >
@@ -464,4 +522,45 @@
       </button>
     </div>
   </div>
+
+  <!-- Espace de dégagement pour ne pas laisser la barre fixe recouvrir la dernière section -->
+  <div class="h-24"></div>
 </form>
+
+<!-- Modale : image en grand -->
+@if (showImageModal && imagePreview) {
+  <div
+    class="fixed inset-0 bg-black/80 backdrop-blur-md z-[200] flex items-center justify-center p-4"
+    (click)="closeImageModal()"
+  >
+    <div
+      class="relative max-w-3xl max-h-[85vh]"
+      (click)="$event.stopPropagation()"
+    >
+      <button
+        type="button"
+        (click)="closeImageModal()"
+        class="absolute -top-12 right-0 text-gray-300 hover:text-white transition-colors p-2"
+      >
+        <svg
+          class="w-7 h-7"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+      <img
+        [src]="imagePreview"
+        alt="Aperçu en grand"
+        class="max-w-full max-h-[85vh] rounded-xl border border-white/10 shadow-2xl object-contain"
+      />
+    </div>
+  </div>
+}
